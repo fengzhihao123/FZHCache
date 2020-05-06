@@ -13,6 +13,11 @@
 		DE266B7624626481002938C2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE266B7424626481002938C2 /* Main.storyboard */; };
 		DE266B7824626485002938C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE266B7724626485002938C2 /* Assets.xcassets */; };
 		DE266B7B24626485002938C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE266B7924626485002938C2 /* LaunchScreen.storyboard */; };
+		DE266B84246264E6002938C2 /* FZHCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B83246264E6002938C2 /* FZHCache.swift */; };
+		DE266B86246264F5002938C2 /* FZHMemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B85246264F5002938C2 /* FZHMemoryCache.swift */; };
+		DE266B8824626502002938C2 /* FZHDiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8724626502002938C2 /* FZHDiskCache.swift */; };
+		DE266B8A24626511002938C2 /* FZHStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8924626511002938C2 /* FZHStorage.swift */; };
+		DE266B8C2462655D002938C2 /* FZHLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8B2462655D002938C2 /* FZHLinkedList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		DE266B7724626485002938C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE266B7A24626485002938C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE266B7C24626485002938C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE266B83246264E6002938C2 /* FZHCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHCache.swift; sourceTree = "<group>"; };
+		DE266B85246264F5002938C2 /* FZHMemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHMemoryCache.swift; sourceTree = "<group>"; };
+		DE266B8724626502002938C2 /* FZHDiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHDiskCache.swift; sourceTree = "<group>"; };
+		DE266B8924626511002938C2 /* FZHStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHStorage.swift; sourceTree = "<group>"; };
+		DE266B8B2462655D002938C2 /* FZHLinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHLinkedList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +81,11 @@
 		DE266B822462648D002938C2 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				DE266B83246264E6002938C2 /* FZHCache.swift */,
+				DE266B85246264F5002938C2 /* FZHMemoryCache.swift */,
+				DE266B8724626502002938C2 /* FZHDiskCache.swift */,
+				DE266B8924626511002938C2 /* FZHStorage.swift */,
+				DE266B8B2462655D002938C2 /* FZHLinkedList.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -147,7 +162,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE266B7324626481002938C2 /* ViewController.swift in Sources */,
+				DE266B8C2462655D002938C2 /* FZHLinkedList.swift in Sources */,
+				DE266B8A24626511002938C2 /* FZHStorage.swift in Sources */,
+				DE266B86246264F5002938C2 /* FZHMemoryCache.swift in Sources */,
+				DE266B84246264E6002938C2 /* FZHCache.swift in Sources */,
 				DE266B6F24626481002938C2 /* AppDelegate.swift in Sources */,
+				DE266B8824626502002938C2 /* FZHDiskCache.swift in Sources */,
 				DE266B7124626481002938C2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
