@@ -11,7 +11,7 @@ import UIKit
 
 protocol FZHCacheInterface {
     typealias Key = String
-    typealias Object = Int
+    associatedtype Object: Codable
     
     var totalCostLimit: Int { get }
     var countLimit: Int { get }

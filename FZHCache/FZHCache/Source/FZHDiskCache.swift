@@ -22,7 +22,17 @@ class FZHDiskCache: FZHCacheInterface {
     }
     
     func setObject(_ obj: Object, forKey key: Key, cost g: Int) {
+        let decoder = JSONEncoder()
+        let data = try? decoder.encode(obj)
         
+        let cachesPath: String? = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
+                                                                     .userDomainMask,
+                                                                     true).last
+        if let path = cachesPath {
+            let newPath = path + "/name.archive"
+            try? data?.write(to: URL(string: newPath)!)
+            print(newPath)
+        }
     }
     
     func removeObject(forKey key: Key) {
