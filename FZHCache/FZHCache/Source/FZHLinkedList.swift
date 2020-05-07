@@ -38,13 +38,9 @@ class FZHLinkedNode: Equatable {
 class FZHLinkedList {
     var head: FZHLinkedNode?
     var rear: FZHLinkedNode?
-    var content = [Key: Object]()
+    var content = [Key: FZHLinkedNode]()
     var totalCost = 0
     var count = 0
-    
-    func getNode(forKey key: Key) -> FZHLinkedNode? {
-        return nil
-    }
     
     func removeNode(node: FZHLinkedNode) {
         totalCost -= node.cost
@@ -62,6 +58,8 @@ class FZHLinkedList {
     }
     
     func insertNode(atHead node: FZHLinkedNode) {
+        content[node.key] = node
+        
         totalCost += node.cost
         count += 1
         

@@ -8,20 +8,14 @@
 
 import UIKit
 class FZHMemoryCache: FZHCacheInterface {
-    typealias Key = String
-    typealias Object = Int
     
     var totalCostLimit: Int
     var countLimit: Int
     private var _lock = os_unfair_lock()
-    private var _linkedList: FZHLinkedList
+    private let _linkedList = FZHLinkedList()
     init(totalCostLimit: Int, countLimit: Int) {
         self.totalCostLimit = totalCostLimit
         self.countLimit = countLimit
-        
-        _linkedList = FZHLinkedList()
-        _linkedList.totalCost = totalCostLimit
-        _linkedList.count = countLimit
     }
     
     func object(forKey key: Key) -> Object? {
@@ -30,8 +24,10 @@ class FZHMemoryCache: FZHCacheInterface {
             os_unfair_lock_unlock(&_lock)
         }
         
-        if let obj = _linkedList.content[key] {
-            return obj
+        if let node = _linkedList.content[key] {
+            node.time = CACurrentMediaTime()
+            _linkedList.moveNode(toHead: node)
+            return node.val
         }
         return nil
     }
@@ -41,8 +37,7 @@ class FZHMemoryCache: FZHCacheInterface {
         defer {
             os_unfair_lock_unlock(&_lock)
         }
-        
-        if let node = _linkedList.getNode(forKey: key) {
+        if let node = _linkedList.content[key] {
             let newCost = node.cost - g
             _linkedList.totalCost += newCost
             node.time = CACurrentMediaTime()
@@ -68,7 +63,7 @@ class FZHMemoryCache: FZHCacheInterface {
             os_unfair_lock_unlock(&_lock)
         }
         
-        if let node = _linkedList.getNode(forKey: key) {
+        if let node = _linkedList.content[key] {
             _linkedList.content.removeValue(forKey: key)
             _linkedList.removeNode(node: node)
         }
