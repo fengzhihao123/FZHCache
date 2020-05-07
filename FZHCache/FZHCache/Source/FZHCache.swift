@@ -24,13 +24,15 @@ class FZHCache {
     private let _diskCache: FZHDiskCache
     private var _cacheType: FZHCacheType
     
-    init(totalCostLimit: Int, countLimit: Int, cacheType: FZHCacheType = .all) {
+    init(totalCostLimit: Int, countLimit: Int, cacheType: FZHCacheType = .all, path: String = "") {
         self.totalCostLimit = totalCostLimit
         self.countLimit = countLimit
         _cacheType = cacheType
         
+        assert(cacheType == .disk && !path.isEmpty, "当选择磁盘缓存时，必须提供缓存路径")
+        
         _memCache = FZHMemoryCache(totalCostLimit: totalCostLimit, countLimit: countLimit)
-        _diskCache = FZHDiskCache(totalCostLimit: totalCostLimit, countLimit: countLimit)
+        _diskCache = FZHDiskCache(totalCostLimit: totalCostLimit, countLimit: countLimit, path: path)
     }
     
     func object(forKey key: Key) -> Object? {

@@ -13,9 +13,17 @@ class FZHMemoryCache: FZHCacheInterface {
     var countLimit: Int
     private var _lock = os_unfair_lock()
     private let _linkedList = FZHLinkedList()
-    init(totalCostLimit: Int, countLimit: Int) {
+    private var removeAllOnMemoryWarning = true
+    private var removeAllOnEnterBackground = true
+    
+    init(totalCostLimit: Int, countLimit: Int, removeAllOnMemoryWarning: Bool = true, removeAllOnEnterBackground: Bool = true) {
         self.totalCostLimit = totalCostLimit
         self.countLimit = countLimit
+        self.removeAllOnMemoryWarning = removeAllOnMemoryWarning
+        self.removeAllOnEnterBackground = removeAllOnEnterBackground
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(_appDidReceiveMemoryWarningNotification), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(_appDidEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
     func object(forKey key: Key) -> Object? {
@@ -49,7 +57,7 @@ class FZHMemoryCache: FZHCacheInterface {
         }
         
         if _linkedList.totalCost > totalCostLimit {
-            reduce(ToCostLimit: totalCostLimit)
+            _reduce(ToCostLimit: totalCostLimit)
         }
         
         if _linkedList.count > countLimit {
@@ -78,7 +86,24 @@ class FZHMemoryCache: FZHCacheInterface {
         _linkedList.removeAll()
     }
     
-    private func reduce(ToCostLimit costLimit: Int) {
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        removeAllObjects()
+    }
+    
+    @objc private func _appDidReceiveMemoryWarningNotification() {
+        if removeAllOnMemoryWarning {
+            removeAllObjects()
+        }
+    }
+    
+    @objc private func _appDidEnterBackgroundNotification() {
+        if removeAllOnEnterBackground {
+            removeAllObjects()
+        }
+    }
+    
+    private func _reduce(ToCostLimit costLimit: Int) {
         _linkedList.removeRear()
     }
 }

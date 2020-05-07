@@ -12,7 +12,7 @@ class FZHDiskCache: FZHCacheInterface {
     var totalCostLimit: Int
     var countLimit: Int
     
-    init(totalCostLimit: Int, countLimit: Int) {
+    init(totalCostLimit: Int, countLimit: Int, path: String) {
         self.totalCostLimit = totalCostLimit
         self.countLimit = countLimit
     }

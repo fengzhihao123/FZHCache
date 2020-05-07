@@ -13,25 +13,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let cache = FZHCache(totalCostLimit: 10, countLimit: 3)
-        cache.setObject(10, forKey: "key1")
-        cache.setObject(20, forKey: "key2")
-        cache.setObject(30, forKey: "key3")
-        cache.setObject(40, forKey: "key4")
-        
-        print(cache.object(forKey: "key1"))
-        print(cache.object(forKey: "key2"))
-        print(cache.object(forKey: "key3"))
-        print(cache.object(forKey: "key4"))
-        
-        print(cache.object(forKey: "key2"))
-        
-        cache.setObject(50, forKey: "key5")
-        
-        print(cache.object(forKey: "key1"))
-        print(cache.object(forKey: "key2"))
-        print(cache.object(forKey: "key3"))
-        print(cache.object(forKey: "key4"))
+//        let cache = FZHCache(totalCostLimit: 10, countLimit: 3)
+//        cache.setObject(10, forKey: "key1")
+//        cache.setObject(20, forKey: "key2")
+//        cache.setObject(30, forKey: "key3")
+//        cache.setObject(40, forKey: "key4")
+//        
+//        print(cache.object(forKey: "key1"))
+//        print(cache.object(forKey: "key2"))
+//        print(cache.object(forKey: "key3"))
+//        print(cache.object(forKey: "key4"))
+//        
+//        print(cache.object(forKey: "key2"))
+//        
+//        cache.setObject(50, forKey: "key5")
+//        
+//        print(cache.object(forKey: "key1"))
+//        print(cache.object(forKey: "key2"))
+//        print(cache.object(forKey: "key3"))
+//        print(cache.object(forKey: "key4"))
         
     }
 
