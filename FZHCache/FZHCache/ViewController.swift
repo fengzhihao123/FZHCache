@@ -16,48 +16,48 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let s = Student(name: "abc")
+//        let s = Student(name: "abc")
+//
+//
+//        let decoder = JSONEncoder()
+//        let data = try? decoder.encode(s)
+//
+//        let cachesPath: String? = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
+//                                                                     .userDomainMask,
+//                                                                     true).last
+//        if let path = cachesPath {
+//            let url = URL(string: path)!
+//            let newPath = url.appendingPathComponent("student.archive")
+//            try? data?.write(to: newPath)
+//            print(newPath.absoluteString)
+//
+//            if let d = try? Data(contentsOf: newPath) {
+//                let s1 = try? JSONDecoder().decode(Student.self, from: d)
+//                print(s1!.name)
+//            }
+//        }
+//
         
         
-        let decoder = JSONEncoder()
-        let data = try? decoder.encode(s)
+        let cache = FZHCache(totalCostLimit: 10, countLimit: 3)
+        cache.setObject(10, forKey: "key1")
+        cache.setObject(20, forKey: "key2")
+        cache.setObject(30, forKey: "key3")
+        cache.setObject(40, forKey: "key4")
         
-        let cachesPath: String? = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
-                                                                     .userDomainMask,
-                                                                     true).last
-        if let path = cachesPath {
-            let url = URL(string: path)!
-            let newPath = url.appendingPathComponent("student.archive")
-            try? data?.write(to: newPath)
-            print(newPath.absoluteString)
-            
-            if let d = try? Data(contentsOf: newPath) {
-                let s1 = try? JSONDecoder().decode(Student.self, from: d)
-                print(s1!.name)
-            }
-        }
+        cache.removeAllObjects()
+        
+        print(cache.object(forKey: "key1"))
+        print(cache.object(forKey: "key2"))
+        print(cache.object(forKey: "key3"))
+        print(cache.object(forKey: "key4"))
         
         
+        print(cache.object(forKey: "key1"))
+        print(cache.object(forKey: "key2"))
+        print(cache.object(forKey: "key3"))
+        print(cache.object(forKey: "key4"))
         
-//        let cache = FZHCache(totalCostLimit: 10, countLimit: 3)
-//        cache.setObject(10, forKey: "key1")
-//        cache.setObject(20, forKey: "key2")
-//        cache.setObject(30, forKey: "key3")
-//        cache.setObject(40, forKey: "key4")
-//        
-//        print(cache.object(forKey: "key1"))
-//        print(cache.object(forKey: "key2"))
-//        print(cache.object(forKey: "key3"))
-//        print(cache.object(forKey: "key4"))
-//        
-//        print(cache.object(forKey: "key2"))
-//        
-//        cache.setObject(50, forKey: "key5")
-//        
-//        print(cache.object(forKey: "key1"))
-//        print(cache.object(forKey: "key2"))
-//        print(cache.object(forKey: "key3"))
-//        print(cache.object(forKey: "key4"))
         
     }
 
