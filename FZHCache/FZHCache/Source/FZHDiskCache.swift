@@ -17,15 +17,15 @@ class FZHDiskCache: FZHCacheInterface {
         self.countLimit = countLimit
     }
     
-    func object(forKey key: KeyType) -> ObjectType? {
+    func object(forKey key: Key) -> Object? {
         return nil
     }
     
-    func setObject(_ obj: ObjectType, forKey key: KeyType, cost g: Int) {
+    func setObject(_ obj: Object, forKey key: Key, cost g: Int) {
         
     }
     
-    func removeObject(forKey key: KeyType) {
+    func removeObject(forKey key: Key) {
         
     }
     

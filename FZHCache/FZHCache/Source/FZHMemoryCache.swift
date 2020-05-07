@@ -8,6 +8,9 @@
 
 import UIKit
 class FZHMemoryCache: FZHCacheInterface {
+    typealias Key = String
+    typealias Object = Int
+    
     var totalCostLimit: Int
     var countLimit: Int
     private var _lock = os_unfair_lock()
@@ -21,7 +24,7 @@ class FZHMemoryCache: FZHCacheInterface {
         _linkedList.count = countLimit
     }
     
-    func object(forKey key: KeyType) -> ObjectType? {
+    func object(forKey key: Key) -> Object? {
         os_unfair_lock_lock(&_lock)
         defer {
             os_unfair_lock_unlock(&_lock)
@@ -33,7 +36,7 @@ class FZHMemoryCache: FZHCacheInterface {
         return nil
     }
     
-    func setObject(_ obj: ObjectType, forKey key: KeyType, cost g: Int) {
+    func setObject(_ obj: Object, forKey key: Key, cost g: Int) {
         os_unfair_lock_lock(&_lock)
         defer {
             os_unfair_lock_unlock(&_lock)
@@ -59,7 +62,7 @@ class FZHMemoryCache: FZHCacheInterface {
         }
     }
     
-    func removeObject(forKey key: KeyType) {
+    func removeObject(forKey key: Key) {
         os_unfair_lock_lock(&_lock)
         defer {
             os_unfair_lock_unlock(&_lock)

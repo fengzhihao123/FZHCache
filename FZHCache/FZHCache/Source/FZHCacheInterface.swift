@@ -8,12 +8,16 @@
 
 import UIKit
 
+
 protocol FZHCacheInterface {
+    typealias Key = String
+    typealias Object = Int
+    
     var totalCostLimit: Int { get }
     var countLimit: Int { get }
     
-    func object(forKey key: KeyType) -> ObjectType?
-    func setObject(_ obj: ObjectType, forKey key: KeyType, cost g: Int)
-    func removeObject(forKey key: KeyType)
+    func object(forKey key: Key) -> Object?
+    func setObject(_ obj: Object, forKey key: Key, cost g: Int)
+    func removeObject(forKey key: Key)
     func removeAllObjects()
 }

@@ -12,16 +12,16 @@ class FZHLinkedNode: Equatable {
         return lhs.key == rhs.key
     }
     
-    var val: ObjectType
-    var key: KeyType
+    var val: Object
+    var key: Key
     var time: TimeInterval = 0.0
     
     var cost = 0
     var prev: FZHLinkedNode?
     var next: FZHLinkedNode?
     
-    init(val: ObjectType,
-         key: KeyType,
+    init(val: Object,
+         key: Key,
          time: TimeInterval,
          cost: Int = 0,
          prev: FZHLinkedNode? = nil,
@@ -35,14 +35,14 @@ class FZHLinkedNode: Equatable {
     }
 }
 
-class FZHLinkedList: NSObject {
-    var head: FZHLinkedNode? = FZHLinkedNode(val: ObjectType(), key: KeyType(), time: CACurrentMediaTime())
-    var rear: FZHLinkedNode? = FZHLinkedNode(val: ObjectType(), key: KeyType(), time: CACurrentMediaTime())
-    var content = [KeyType: ObjectType]()
+class FZHLinkedList {
+    var head: FZHLinkedNode?
+    var rear: FZHLinkedNode?
+    var content = [Key: Object]()
     var totalCost = 0
     var count = 0
     
-    func getNode(forKey key: KeyType) -> FZHLinkedNode? {
+    func getNode(forKey key: Key) -> FZHLinkedNode? {
         return nil
     }
     

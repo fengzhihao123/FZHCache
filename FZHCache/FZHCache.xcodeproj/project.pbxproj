@@ -16,7 +16,6 @@
 		DE266B84246264E6002938C2 /* FZHCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B83246264E6002938C2 /* FZHCache.swift */; };
 		DE266B86246264F5002938C2 /* FZHMemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B85246264F5002938C2 /* FZHMemoryCache.swift */; };
 		DE266B8824626502002938C2 /* FZHDiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8724626502002938C2 /* FZHDiskCache.swift */; };
-		DE266B8A24626511002938C2 /* FZHStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8924626511002938C2 /* FZHStorage.swift */; };
 		DE266B8C2462655D002938C2 /* FZHLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8B2462655D002938C2 /* FZHLinkedList.swift */; };
 		DE266B8E2462C042002938C2 /* FZHCacheInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */; };
 /* End PBXBuildFile section */
@@ -33,7 +32,6 @@
 		DE266B83246264E6002938C2 /* FZHCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHCache.swift; sourceTree = "<group>"; };
 		DE266B85246264F5002938C2 /* FZHMemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHMemoryCache.swift; sourceTree = "<group>"; };
 		DE266B8724626502002938C2 /* FZHDiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHDiskCache.swift; sourceTree = "<group>"; };
-		DE266B8924626511002938C2 /* FZHStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHStorage.swift; sourceTree = "<group>"; };
 		DE266B8B2462655D002938C2 /* FZHLinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHLinkedList.swift; sourceTree = "<group>"; };
 		DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHCacheInterface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,7 +84,6 @@
 				DE266B83246264E6002938C2 /* FZHCache.swift */,
 				DE266B85246264F5002938C2 /* FZHMemoryCache.swift */,
 				DE266B8724626502002938C2 /* FZHDiskCache.swift */,
-				DE266B8924626511002938C2 /* FZHStorage.swift */,
 				DE266B8B2462655D002938C2 /* FZHLinkedList.swift */,
 				DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */,
 			);
@@ -166,7 +163,6 @@
 			files = (
 				DE266B7324626481002938C2 /* ViewController.swift in Sources */,
 				DE266B8C2462655D002938C2 /* FZHLinkedList.swift in Sources */,
-				DE266B8A24626511002938C2 /* FZHStorage.swift in Sources */,
 				DE266B86246264F5002938C2 /* FZHMemoryCache.swift in Sources */,
 				DE266B84246264E6002938C2 /* FZHCache.swift in Sources */,
 				DE266B6F24626481002938C2 /* AppDelegate.swift in Sources */,

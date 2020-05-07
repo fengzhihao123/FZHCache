@@ -14,14 +14,8 @@ enum FZHCacheType {
     case disk
 }
 
-struct ObjectType {
-    
-}
-
-struct KeyType: Hashable {
-    
-}
-
+typealias Key = String
+typealias Object = Int
 
 class FZHCache {
     private(set) var totalCostLimit = 0
@@ -39,7 +33,7 @@ class FZHCache {
         _diskCache = FZHDiskCache(totalCostLimit: totalCostLimit, countLimit: countLimit)
     }
     
-    func object(forKey key: KeyType) -> ObjectType? {
+    func object(forKey key: Key) -> Object? {
         if let obj = _memCache.object(forKey: key) {
             return obj
         } else {
@@ -51,11 +45,11 @@ class FZHCache {
         return nil
     }
     
-    func setObject(_ obj: ObjectType, forKey key: KeyType) {
+    func setObject(_ obj: Object, forKey key: Key) {
         setObject(obj, forKey: key, cost: 0)
     }
     
-    func setObject(_ obj: ObjectType, forKey key: KeyType, cost g: Int) {
+    func setObject(_ obj: Object, forKey key: Key, cost g: Int) {
         switch _cacheType {
         case .all:
             _memCache.setObject(obj, forKey: key, cost: g)
@@ -67,7 +61,7 @@ class FZHCache {
         }
     }
     
-    func removeObject(forKey key: KeyType) {
+    func removeObject(forKey key: Key) {
         switch _cacheType {
         case .all:
             _memCache.removeObject(forKey: key)
