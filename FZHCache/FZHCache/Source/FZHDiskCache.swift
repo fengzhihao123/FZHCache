@@ -8,6 +8,30 @@
 
 import UIKit
 
-class FZHDiskCache: NSObject {
+class FZHDiskCache: FZHCacheInterface {
+    var totalCostLimit: Int
+    var countLimit: Int
+    
+    init(totalCostLimit: Int, countLimit: Int) {
+        self.totalCostLimit = totalCostLimit
+        self.countLimit = countLimit
+    }
+    
+    func object(forKey key: KeyType) -> ObjectType? {
+        return nil
+    }
+    
+    func setObject(_ obj: ObjectType, forKey key: KeyType, cost g: Int) {
+        
+    }
+    
+    func removeObject(forKey key: KeyType) {
+        
+    }
+    
+    func removeAllObjects() {
+        
+    }
+    
 
 }

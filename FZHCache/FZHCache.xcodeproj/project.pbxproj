@@ -18,6 +18,7 @@
 		DE266B8824626502002938C2 /* FZHDiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8724626502002938C2 /* FZHDiskCache.swift */; };
 		DE266B8A24626511002938C2 /* FZHStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8924626511002938C2 /* FZHStorage.swift */; };
 		DE266B8C2462655D002938C2 /* FZHLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8B2462655D002938C2 /* FZHLinkedList.swift */; };
+		DE266B8E2462C042002938C2 /* FZHCacheInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		DE266B8724626502002938C2 /* FZHDiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHDiskCache.swift; sourceTree = "<group>"; };
 		DE266B8924626511002938C2 /* FZHStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHStorage.swift; sourceTree = "<group>"; };
 		DE266B8B2462655D002938C2 /* FZHLinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHLinkedList.swift; sourceTree = "<group>"; };
+		DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHCacheInterface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				DE266B8724626502002938C2 /* FZHDiskCache.swift */,
 				DE266B8924626511002938C2 /* FZHStorage.swift */,
 				DE266B8B2462655D002938C2 /* FZHLinkedList.swift */,
+				DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 				DE266B84246264E6002938C2 /* FZHCache.swift in Sources */,
 				DE266B6F24626481002938C2 /* AppDelegate.swift in Sources */,
 				DE266B8824626502002938C2 /* FZHDiskCache.swift in Sources */,
+				DE266B8E2462C042002938C2 /* FZHCacheInterface.swift in Sources */,
 				DE266B7124626481002938C2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

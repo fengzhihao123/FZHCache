@@ -7,20 +7,47 @@
 //
 
 import UIKit
+
+enum FZHCacheType {
+    case all
+    case memory
+    case disk
+}
+
 struct ObjectType {
     
 }
 
-struct KeyType {
+struct KeyType: Hashable {
     
 }
 
 
-class FZHCache: NSObject {
-    var totalCostLimit = 0
-    var countLimit = 0
+class FZHCache {
+    private(set) var totalCostLimit = 0
+    private(set) var countLimit = 0
+    private let _memCache: FZHMemoryCache
+    private let _diskCache: FZHDiskCache
+    private var _cacheType: FZHCacheType
     
-    func object(forKey key: KeyType) -> String? {
+    init(totalCostLimit: Int, countLimit: Int, cacheType: FZHCacheType = .all) {
+        self.totalCostLimit = totalCostLimit
+        self.countLimit = countLimit
+        _cacheType = cacheType
+        
+        _memCache = FZHMemoryCache(totalCostLimit: totalCostLimit, countLimit: countLimit)
+        _diskCache = FZHDiskCache(totalCostLimit: totalCostLimit, countLimit: countLimit)
+    }
+    
+    func object(forKey key: KeyType) -> ObjectType? {
+        if let obj = _memCache.object(forKey: key) {
+            return obj
+        } else {
+            if let obj = _diskCache.object(forKey: key) {
+                _memCache.setObject(obj, forKey: key, cost: 0)
+                return obj
+            }
+        }
         return nil
     }
     
@@ -29,14 +56,39 @@ class FZHCache: NSObject {
     }
     
     func setObject(_ obj: ObjectType, forKey key: KeyType, cost g: Int) {
-        
+        switch _cacheType {
+        case .all:
+            _memCache.setObject(obj, forKey: key, cost: g)
+            _diskCache.setObject(obj, forKey: key, cost: g)
+        case .memory:
+            _memCache.setObject(obj, forKey: key, cost: g)
+        case .disk:
+            _diskCache.setObject(obj, forKey: key, cost: g)
+        }
     }
     
     func removeObject(forKey key: KeyType) {
-        
+        switch _cacheType {
+        case .all:
+            _memCache.removeObject(forKey: key)
+            _diskCache.removeObject(forKey: key)
+        case .memory:
+            _memCache.removeObject(forKey: key)
+        case .disk:
+            _diskCache.removeObject(forKey: key)
+        }
     }
     
     func removeAllObjects() {
+        switch _cacheType {
+        case .all:
+            _memCache.removeAllObjects()
+            _diskCache.removeAllObjects()
+        case .memory:
+            _memCache.removeAllObjects()
+        case .disk:
+            _diskCache.removeAllObjects()
+        }
         
     }
 }
