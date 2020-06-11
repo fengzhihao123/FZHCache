@@ -12,55 +12,52 @@ struct Student: Codable {
 }
 
 class ViewController: UIViewController {
-
+    let cache = Cache<Int>(cacheName: "cache_test")
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let s = Student(name: "abc")
-        
-        
-        let decoder = JSONEncoder()
-        let data = try? decoder.encode(s)
-        
-        let cachesPath: String? = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
-                                                                     .userDomainMask,
-                                                                     true).last
-        if let path = cachesPath {
-            let url = URL(string: path)!
-            let newPath = url.appendingPathComponent("student.archive")
-            try? data?.write(to: newPath)
-            print(newPath.absoluteString)
-            
-            if let d = try? Data(contentsOf: newPath) {
-                let s1 = try? JSONDecoder().decode(Student.self, from: d)
-                print(s1!.name)
-            }
-        }
-        
-        
-        
-//        let cache = FZHCache(totalCostLimit: 10, countLimit: 3)
-//        cache.setObject(10, forKey: "key1")
-//        cache.setObject(20, forKey: "key2")
-//        cache.setObject(30, forKey: "key3")
-//        cache.setObject(40, forKey: "key4")
-//        
-//        print(cache.object(forKey: "key1"))
-//        print(cache.object(forKey: "key2"))
-//        print(cache.object(forKey: "key3"))
-//        print(cache.object(forKey: "key4"))
-//        
-//        print(cache.object(forKey: "key2"))
-//        
-//        cache.setObject(50, forKey: "key5")
-//        
-//        print(cache.object(forKey: "key1"))
-//        print(cache.object(forKey: "key2"))
-//        print(cache.object(forKey: "key3"))
-//        print(cache.object(forKey: "key4"))
-        
+        cache.memoryCache.totalCountLimit = 3
+        testAdd()
+        testRemove()
+        testOutOfCount()
+        testRemoveAll()
     }
+}
 
-
+private extension ViewController {
+    func testAdd() {
+        cache.set(10, forKey: "key1")
+        cache.set(20, forKey: "key2")
+        cache.set(30, forKey: "key3")
+        
+        assert(cache.object(forKey: "key1") == 10)
+        assert(cache.object(forKey: "key2") == 20)
+        assert(cache.object(forKey: "key3") == 30)
+    }
+    
+    func testRemove() {
+        cache.remove(forKey: "key1")
+        assert(cache.object(forKey: "key1") == nil)
+    }
+    
+    func testOutOfCount() {
+        cache.set(40, forKey: "key4")
+        cache.set(50, forKey: "key5")
+        
+        assert(cache.object(forKey: "key2") == nil)
+        assert(cache.object(forKey: "key3") == 30)
+        assert(cache.object(forKey: "key4") == 40)
+        assert(cache.object(forKey: "key5") == 50)
+    }
+    
+    func testRemoveAll() {
+        cache.removeAll()
+        
+        assert(cache.object(forKey: "key3") == nil)
+        assert(cache.object(forKey: "key4") == nil)
+        assert(cache.object(forKey: "key5") == nil)
+    }
 }
 

@@ -18,6 +18,12 @@
 		DE266B8824626502002938C2 /* FZHDiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8724626502002938C2 /* FZHDiskCache.swift */; };
 		DE266B8C2462655D002938C2 /* FZHLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8B2462655D002938C2 /* FZHLinkedList.swift */; };
 		DE266B8E2462C042002938C2 /* FZHCacheInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */; };
+		DE2DC90F248E071D00C1093E /* MemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DC90E248E071D00C1093E /* MemoryStorage.swift */; };
+		DE2DC911248E0E5700C1093E /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DC910248E0E5700C1093E /* MemoryCache.swift */; };
+		DE2DC913248E16AC00C1093E /* CacheBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DC912248E16AC00C1093E /* CacheBehavior.swift */; };
+		DE2DC915248E1CB900C1093E /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DC914248E1CB900C1093E /* DiskStorage.swift */; };
+		DED431CC2492055800BB7D99 /* DiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED431CB2492055800BB7D99 /* DiskCache.swift */; };
+		DED431CE2492110200BB7D99 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED431CD2492110200BB7D99 /* Cache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +40,12 @@
 		DE266B8724626502002938C2 /* FZHDiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHDiskCache.swift; sourceTree = "<group>"; };
 		DE266B8B2462655D002938C2 /* FZHLinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHLinkedList.swift; sourceTree = "<group>"; };
 		DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHCacheInterface.swift; sourceTree = "<group>"; };
+		DE2DC90E248E071D00C1093E /* MemoryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryStorage.swift; sourceTree = "<group>"; };
+		DE2DC910248E0E5700C1093E /* MemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
+		DE2DC912248E16AC00C1093E /* CacheBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheBehavior.swift; sourceTree = "<group>"; };
+		DE2DC914248E1CB900C1093E /* DiskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskStorage.swift; sourceTree = "<group>"; };
+		DED431CB2492055800BB7D99 /* DiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCache.swift; sourceTree = "<group>"; };
+		DED431CD2492110200BB7D99 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +78,7 @@
 		DE266B6D24626481002938C2 /* FZHCache */ = {
 			isa = PBXGroup;
 			children = (
+				DE2DC90D248E065600C1093E /* SwiftyCache */,
 				DE266B822462648D002938C2 /* Source */,
 				DE266B6E24626481002938C2 /* AppDelegate.swift */,
 				DE266B7024626481002938C2 /* SceneDelegate.swift */,
@@ -88,6 +101,19 @@
 				DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		DE2DC90D248E065600C1093E /* SwiftyCache */ = {
+			isa = PBXGroup;
+			children = (
+				DE2DC90E248E071D00C1093E /* MemoryStorage.swift */,
+				DE2DC910248E0E5700C1093E /* MemoryCache.swift */,
+				DE2DC912248E16AC00C1093E /* CacheBehavior.swift */,
+				DE2DC914248E1CB900C1093E /* DiskStorage.swift */,
+				DED431CB2492055800BB7D99 /* DiskCache.swift */,
+				DED431CD2492110200BB7D99 /* Cache.swift */,
+			);
+			path = SwiftyCache;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,12 +187,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DED431CE2492110200BB7D99 /* Cache.swift in Sources */,
 				DE266B7324626481002938C2 /* ViewController.swift in Sources */,
+				DE2DC911248E0E5700C1093E /* MemoryCache.swift in Sources */,
 				DE266B8C2462655D002938C2 /* FZHLinkedList.swift in Sources */,
 				DE266B86246264F5002938C2 /* FZHMemoryCache.swift in Sources */,
 				DE266B84246264E6002938C2 /* FZHCache.swift in Sources */,
 				DE266B6F24626481002938C2 /* AppDelegate.swift in Sources */,
 				DE266B8824626502002938C2 /* FZHDiskCache.swift in Sources */,
+				DED431CC2492055800BB7D99 /* DiskCache.swift in Sources */,
+				DE2DC913248E16AC00C1093E /* CacheBehavior.swift in Sources */,
+				DE2DC915248E1CB900C1093E /* DiskStorage.swift in Sources */,
+				DE2DC90F248E071D00C1093E /* MemoryStorage.swift in Sources */,
 				DE266B8E2462C042002938C2 /* FZHCacheInterface.swift in Sources */,
 				DE266B7124626481002938C2 /* SceneDelegate.swift in Sources */,
 			);
