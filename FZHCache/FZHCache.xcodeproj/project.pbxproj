@@ -7,17 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE0787EC24922BE0007E71AE /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0787EB24922BE0007E71AE /* Constant.swift */; };
 		DE266B6F24626481002938C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B6E24626481002938C2 /* AppDelegate.swift */; };
 		DE266B7124626481002938C2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B7024626481002938C2 /* SceneDelegate.swift */; };
 		DE266B7324626481002938C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B7224626481002938C2 /* ViewController.swift */; };
 		DE266B7624626481002938C2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE266B7424626481002938C2 /* Main.storyboard */; };
 		DE266B7824626485002938C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE266B7724626485002938C2 /* Assets.xcassets */; };
 		DE266B7B24626485002938C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE266B7924626485002938C2 /* LaunchScreen.storyboard */; };
-		DE266B84246264E6002938C2 /* FZHCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B83246264E6002938C2 /* FZHCache.swift */; };
-		DE266B86246264F5002938C2 /* FZHMemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B85246264F5002938C2 /* FZHMemoryCache.swift */; };
-		DE266B8824626502002938C2 /* FZHDiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8724626502002938C2 /* FZHDiskCache.swift */; };
-		DE266B8C2462655D002938C2 /* FZHLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8B2462655D002938C2 /* FZHLinkedList.swift */; };
-		DE266B8E2462C042002938C2 /* FZHCacheInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */; };
 		DE2DC90F248E071D00C1093E /* MemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DC90E248E071D00C1093E /* MemoryStorage.swift */; };
 		DE2DC911248E0E5700C1093E /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DC910248E0E5700C1093E /* MemoryCache.swift */; };
 		DE2DC913248E16AC00C1093E /* CacheBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DC912248E16AC00C1093E /* CacheBehavior.swift */; };
@@ -27,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE0787EB24922BE0007E71AE /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		DE266B6B24626481002938C2 /* FZHCache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FZHCache.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE266B6E24626481002938C2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE266B7024626481002938C2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -35,11 +32,6 @@
 		DE266B7724626485002938C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE266B7A24626485002938C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE266B7C24626485002938C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DE266B83246264E6002938C2 /* FZHCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHCache.swift; sourceTree = "<group>"; };
-		DE266B85246264F5002938C2 /* FZHMemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHMemoryCache.swift; sourceTree = "<group>"; };
-		DE266B8724626502002938C2 /* FZHDiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHDiskCache.swift; sourceTree = "<group>"; };
-		DE266B8B2462655D002938C2 /* FZHLinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHLinkedList.swift; sourceTree = "<group>"; };
-		DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHCacheInterface.swift; sourceTree = "<group>"; };
 		DE2DC90E248E071D00C1093E /* MemoryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryStorage.swift; sourceTree = "<group>"; };
 		DE2DC910248E0E5700C1093E /* MemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
 		DE2DC912248E16AC00C1093E /* CacheBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheBehavior.swift; sourceTree = "<group>"; };
@@ -78,8 +70,7 @@
 		DE266B6D24626481002938C2 /* FZHCache */ = {
 			isa = PBXGroup;
 			children = (
-				DE2DC90D248E065600C1093E /* SwiftyCache */,
-				DE266B822462648D002938C2 /* Source */,
+				DE2DC90D248E065600C1093E /* Source */,
 				DE266B6E24626481002938C2 /* AppDelegate.swift */,
 				DE266B7024626481002938C2 /* SceneDelegate.swift */,
 				DE266B7224626481002938C2 /* ViewController.swift */,
@@ -91,19 +82,7 @@
 			path = FZHCache;
 			sourceTree = "<group>";
 		};
-		DE266B822462648D002938C2 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				DE266B83246264E6002938C2 /* FZHCache.swift */,
-				DE266B85246264F5002938C2 /* FZHMemoryCache.swift */,
-				DE266B8724626502002938C2 /* FZHDiskCache.swift */,
-				DE266B8B2462655D002938C2 /* FZHLinkedList.swift */,
-				DE266B8D2462C042002938C2 /* FZHCacheInterface.swift */,
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
-		DE2DC90D248E065600C1093E /* SwiftyCache */ = {
+		DE2DC90D248E065600C1093E /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				DE2DC90E248E071D00C1093E /* MemoryStorage.swift */,
@@ -112,8 +91,9 @@
 				DE2DC914248E1CB900C1093E /* DiskStorage.swift */,
 				DED431CB2492055800BB7D99 /* DiskCache.swift */,
 				DED431CD2492110200BB7D99 /* Cache.swift */,
+				DE0787EB24922BE0007E71AE /* Constant.swift */,
 			);
-			path = SwiftyCache;
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,16 +170,12 @@
 				DED431CE2492110200BB7D99 /* Cache.swift in Sources */,
 				DE266B7324626481002938C2 /* ViewController.swift in Sources */,
 				DE2DC911248E0E5700C1093E /* MemoryCache.swift in Sources */,
-				DE266B8C2462655D002938C2 /* FZHLinkedList.swift in Sources */,
-				DE266B86246264F5002938C2 /* FZHMemoryCache.swift in Sources */,
-				DE266B84246264E6002938C2 /* FZHCache.swift in Sources */,
 				DE266B6F24626481002938C2 /* AppDelegate.swift in Sources */,
-				DE266B8824626502002938C2 /* FZHDiskCache.swift in Sources */,
 				DED431CC2492055800BB7D99 /* DiskCache.swift in Sources */,
 				DE2DC913248E16AC00C1093E /* CacheBehavior.swift in Sources */,
 				DE2DC915248E1CB900C1093E /* DiskStorage.swift in Sources */,
+				DE0787EC24922BE0007E71AE /* Constant.swift in Sources */,
 				DE2DC90F248E071D00C1093E /* MemoryStorage.swift in Sources */,
-				DE266B8E2462C042002938C2 /* FZHCacheInterface.swift in Sources */,
 				DE266B7124626481002938C2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

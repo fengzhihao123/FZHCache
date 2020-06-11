@@ -52,11 +52,13 @@ class DiskStorage<Value: Codable> {
     
     convenience init(currentPath: String) {
         self.init(path: currentPath)
-        
+        guard generateDictionary() else { return }
+        guard dbOpen() else { return }
+        guard dbCreateTable() else { return }
     }
     
     deinit {
-        
+        dbClose()
     }
     
     func generateMD5(forKey key: String) -> String {
@@ -97,7 +99,10 @@ class DiskStorage<Value: Codable> {
     
     @discardableResult
     func remove(key: String) -> Bool {
-        return false
+        if let fn = dbGetFileName(key: key) {
+            removeFile(fileName: fn)
+        }
+        return dbRemoveItem(key: key)
     }
 }
 
@@ -109,6 +114,7 @@ extension DiskStorage {
         return true
     }
     
+    @discardableResult
     func dbClose() -> Bool {
         var isContinue = true
         guard db == nil else {
@@ -137,7 +143,7 @@ extension DiskStorage {
     /**
      创建数据库表
      */
-    func dbCreateTable() -> Bool{
+    func dbCreateTable() -> Bool {
         let sql = "pragma journal_mode = wal; pragma synchronous = normal; create table if not exists detailed (key text primary key,filename text,inline_data blob,size integer,last_access_time integer); create index if not exists last_access_time_idx on detailed(last_access_time);"
         guard dbExcuSql(sql: sql) else{ return false }
         return true
@@ -145,7 +151,7 @@ extension DiskStorage {
     
     
     @discardableResult
-    func dbExcuSql(sql:String) -> Bool{
+    func dbExcuSql(sql: String) -> Bool {
         guard sqlite3_exec(db,sql.cString(using: .utf8),nil,nil,nil) == SQLITE_OK else{
             print("sqlite exec error \(String(describing: String(validatingUTF8: sqlite3_errmsg(db))))")
             return false

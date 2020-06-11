@@ -48,8 +48,6 @@ class ConvertibleFactory<Value: Codable> {
     }
 }
 
-private let kCacheIdentifier = "com.swiftcache.disk"
-
 class DiskCache<Value: Codable> {
     public var maxSize: vm_size_t = 0
     public var maxCountLimit: vm_size_t = 0
@@ -60,7 +58,7 @@ class DiskCache<Value: Codable> {
     private let dataMaxSize = 20 * 1024
     public var autoInterval: TimeInterval = 120
     var keys = [String]()
-    private let queue = DispatchQueue(label: kCacheIdentifier, attributes: DispatchQueue.Attributes.concurrent)
+    private let queue = DispatchQueue(label: kDCIdentifier, attributes: DispatchQueue.Attributes.concurrent)
     
     init(path: String) {
         storage = DiskStorage(currentPath: path)

@@ -44,8 +44,6 @@ class CacheGenerator<Value: Codable>: IteratorProtocol {
     }
 }
 
-private let kCacheIdentifier = "com.fzhcache.cache"
-
 class Cache<Value: Codable> {
     public let memoryCache = MemoryCache<Value>()
     public let diskCache: DiskCache<Value>
@@ -54,9 +52,9 @@ class Cache<Value: Codable> {
     private let queue = DispatchQueue(label: kCacheIdentifier, attributes: DispatchQueue.Attributes.concurrent)
     
     public init(cacheName: String = "default") {
-        self.diskCachePath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
-        self.diskCachePath = self.diskCachePath + ("/\(cacheName)")
-        self.diskCache = DiskCache(path: self.diskCachePath)
+        diskCachePath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
+        diskCachePath = diskCachePath + ("/\(cacheName)")
+        diskCache = DiskCache(path: diskCachePath)
     }
 }
 
@@ -81,9 +79,9 @@ extension Cache: Sequence {
 extension Cache: CacheBehavior {
     
     func contains(_ key: String, completionHandler: @escaping ((String, Bool) -> Void)) {
-        queue.async {
-            let isExists = self.memoryCache.contains(key) || self.diskCache.contains(key)
-            completionHandler(key, isExists)
+        queue.async { [weak self] in
+            let contains = (self?.memoryCache.contains(key) ?? false) || (self?.diskCache.contains(key) ?? false)
+            completionHandler(key, contains)
         }
     }
     
@@ -102,9 +100,9 @@ extension Cache: CacheBehavior {
     }
     
     func set(_ value: Value?, forKey key: String, cost: vm_size_t, completionHandler: @escaping ((String, Bool) -> Void)) {
-        queue.async {
-            let memoryCacheFin = self.memoryCache.set(value, forKey: key)
-            let diskCacheFin = self.diskCache.set(value, forKey: key)
+        queue.async { [weak self] in
+            let memoryCacheFin = self?.memoryCache.set(value, forKey: key) ?? false
+            let diskCacheFin = self?.diskCache.set(value, forKey: key) ?? false
             if memoryCacheFin || diskCacheFin {
                 completionHandler(key, true)
             } else {
@@ -114,8 +112,8 @@ extension Cache: CacheBehavior {
     }
     
     func object(forKey key: String) -> Value? {
-        if let object = self.memoryCache.object(forKey: key){ return object }
-         if let object = diskCache.object(forKey: key){
+        if let object = memoryCache.object(forKey: key) { return object }
+         if let object = diskCache.object(forKey: key) {
             memoryCache.set(object, forKey: key)
             return object
         }
@@ -123,13 +121,15 @@ extension Cache: CacheBehavior {
     }
     
     func object(forKey key: String, completionHandler: @escaping ((String, Value?) -> Void)) {
-        queue.async {
-            if let object = self.memoryCache.object(forKey: key){
+        queue.async { [weak self] in
+            if let object = self?.memoryCache.object(forKey: key){
                 completionHandler(key,object)
-            }else if let object = self.diskCache.object(forKey: key){
-                self.memoryCache.set(object, forKey: key)
+            } else if let object = self?.diskCache.object(forKey: key) {
+                self?.memoryCache.set(object, forKey: key)
                 completionHandler(key,object)
-            }else{ completionHandler(key,nil) }
+            } else {
+                completionHandler(key,nil)
+            }
         }
     }
     
@@ -139,9 +139,9 @@ extension Cache: CacheBehavior {
     }
     
     func removeAll(completionHandler: @escaping (() -> Void)) {
-        queue.async {
-            self.memoryCache.removeAll()
-            self.diskCache.removeAll()
+        queue.async { [weak self] in
+            self?.memoryCache.removeAll()
+            self?.diskCache.removeAll()
             completionHandler()
         }
     }

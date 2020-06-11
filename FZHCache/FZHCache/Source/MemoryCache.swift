@@ -28,8 +28,6 @@ public class MCGenerator<Value: Codable>: IteratorProtocol{
     
 }
 
-private let kQueueLabel = "com.fzh.memoryCache"
-
 class MemoryCache<Value: Codable> {
     var totalCostLimit: vm_size_t = 0
     var totalCountLimit: vm_size_t = 0
@@ -39,7 +37,7 @@ class MemoryCache<Value: Codable> {
     
     let storage = MemoryStorage<Value>()
     let semaphoreSingal = DispatchSemaphore(value: 1)
-    private let queue = DispatchQueue(label: kQueueLabel, attributes: DispatchQueue.Attributes.concurrent)
+    private let queue = DispatchQueue(label: kMCIdentifier, attributes: DispatchQueue.Attributes.concurrent)
     
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMemoryWarningNotification), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
