@@ -7,57 +7,22 @@
 //
 
 import UIKit
-class DCGenerator<Value: Codable>: IteratorProtocol {
-    typealias Element = (key: String, value: Value)
-    private let diskCache: DiskCache<Value>
-    
-    var index: Int
-    func next() -> Element? {
-        if index == 0 {
-            diskCache.getAllKeys()
-        }
-        
-        guard index < diskCache.keys.endIndex else {
-            index = diskCache.keys.startIndex
-            return nil
-        }
-        
-        let key = diskCache.keys[index]
-        diskCache.keys.formIndex(after: &index)
-        if let e = diskCache.object(forKey: key) {
-            return (key, e)
-        }
-        return nil
-    }
-    
-    fileprivate init(diskCache: DiskCache<Value>) {
-        self.diskCache = diskCache
-        self.index = diskCache.keys.startIndex
-    }
-}
-
-class ConvertibleFactory<Value: Codable> {
-    func toData(value: Value) throws -> Data? {
-        let data = try? JSONEncoder().encode(value)
-        return data
-    }
-    
-    func fromData(data: Data) throws -> Value? {
-        let object = try? JSONDecoder().decode(Value.self, from: data)
-        return object
-    }
-}
 
 class DiskCache<Value: Codable> {
-    public var maxSize: vm_size_t = 0
-    public var maxCountLimit: vm_size_t = 0
+    /// 磁盘缓存的最大容量
+    public var maxSize = 0
+    /// 磁盘缓存的最大数量
+    public var maxCountLimit = 0
+    /// 磁盘缓存的过期时间
     public var maxCachePeriodInSecond: TimeInterval = 60 * 60 * 24 * 7
+    public var autoInterval: TimeInterval = 120
+    
+    var keys = [String]()
     fileprivate let storage: DiskStorage<Value>
+    
     private let semaphoreSignal = DispatchSemaphore(value: 1)
     private let convertible = ConvertibleFactory<Value>()
     private let dataMaxSize = 20 * 1024
-    public var autoInterval: TimeInterval = 120
-    var keys = [String]()
     private let queue = DispatchQueue(label: kDCIdentifier, attributes: DispatchQueue.Attributes.concurrent)
     
     init(path: String) {
@@ -158,67 +123,48 @@ class DiskCache<Value: Codable> {
     }
 }
 
-extension DiskCache: Sequence {
+
+
+extension DiskCache {
+    func getAllKeys() {
+        semaphoreSignal.wait()
+        if let keys = storage.dbGetAllkeys() {
+            self.keys = keys
+        }
+        semaphoreSignal.signal()
+    }
     
-    public subscript(key:String) ->Value? {
-        set {
-            if let newValue = newValue {
-                set(newValue, forKey: key)
-            }
-        } get {
-            if let obj = object(forKey: key) {
-                return obj
-            }
-            return nil
+    public func getTotalItemCount() -> Int {
+        semaphoreSignal.wait()
+        let count = storage.dbTotalItemCount()
+        semaphoreSignal.signal()
+        return Int(count)
+    }
+    
+    public func getTotalItemCount(completionHandler:@escaping((_ count:Int)->Void)){
+        queue.async {
+            let count = self.getTotalItemCount()
+            completionHandler(count)
         }
     }
     
-    public func makeIterator() -> DCGenerator<Value> {
-        semaphoreSignal.wait()
-        let generator = DCGenerator(diskCache: self)
-       semaphoreSignal.signal()
-        return generator
+    public func getTotalItemSize()->Int32{
+        self.semaphoreSignal.wait()
+        let size = storage.dbTotalItemSize()
+        self.semaphoreSignal.signal()
+        return size
+    }
+    
+    public func getTotalItemSize(completionHandler:@escaping((_ size:Int32)->Void)){
+        queue.async {
+            let size = self.getTotalItemSize()
+            completionHandler(size)
+        }
     }
 }
 
-extension DiskCache {
-    func getAllKeys(){
-         semaphoreSignal.wait()
-         keys = storage.dbGetAllkeys()!
-         semaphoreSignal.signal()
-     }
-     
-     public func getTotalItemCount() -> Int {
-         semaphoreSignal.wait()
-         let count = storage.dbTotalItemCount()
-         semaphoreSignal.signal()
-         return Int(count)
-     }
-     
-     public func getTotalItemCount(completionHandler:@escaping((_ count:Int)->Void)){
-         queue.async {
-             let count = self.getTotalItemCount()
-             completionHandler(count)
-         }
-     }
-     
-     public func getTotalItemSize()->Int32{
-         self.semaphoreSignal.wait()
-         let size = storage.dbTotalItemSize()
-         self.semaphoreSignal.signal()
-         return size
-     }
-     
-     public func getTotalItemSize(completionHandler:@escaping((_ size:Int32)->Void)){
-         queue.async {
-             let size = self.getTotalItemSize()
-             completionHandler(size)
-         }
-     }
-}
-
 extension DiskCache: CacheBehavior {
-    func contains(_ key: String, completionHandler: @escaping ((String, Bool) -> Void)) {
+    public func contains(_ key: String, completionHandler: @escaping ((String, Bool) -> Void)) {
         queue.async {
             let exists = self.contains(key)
             completionHandler(key, exists)
@@ -233,7 +179,7 @@ extension DiskCache: CacheBehavior {
     }
     
     @discardableResult
-    func set(_ value: Value?, forKey key: String, cost: vm_size_t = 0) -> Bool {
+    func set(_ value: Value?, forKey key: String, cost: Int = 0) -> Bool {
         guard let object = value else { return false }
         guard let encodedData = try? convertible.toData(value: object) else{ return false }
         var filename:String? = nil
@@ -247,13 +193,13 @@ extension DiskCache: CacheBehavior {
         return fin
     }
     
-    func set(_ value: Value?, forKey key: String, cost: vm_size_t, completionHandler: @escaping((_ key: String, _ finished: Bool) -> Void)) {
+    func set(_ value: Value?, forKey key: String, cost: Int, completionHandler: @escaping((_ key: String, _ finished: Bool) -> Void)) {
         queue.async {
             let success =  self.set(value, forKey: key)
             completionHandler(key, success)
         }
     }
-   
+    
     public func object(forKey key: String) -> Value? {
         semaphoreSignal.wait()
         let item = storage.dbGetItemForKey(forKey: key)
@@ -261,7 +207,7 @@ extension DiskCache: CacheBehavior {
         guard let value = item?.data else{ return nil }
         return try? convertible.fromData(data: value)
     }
-   
+    
     public func object(forKey key:String,completionHandler:@escaping((_ key:String,_ value:Value?) -> Void)){
         queue.async {
             if let object = self.object(forKey: key){ completionHandler(key,object) }
@@ -275,7 +221,7 @@ extension DiskCache: CacheBehavior {
         semaphoreSignal.signal()
     }
     
-  
+    
     public func removeAll(completionHandler: @escaping (() -> Void)) {
         queue.async {
             self.removeAll()
@@ -283,18 +229,91 @@ extension DiskCache: CacheBehavior {
         }
     }
     
-   
+    
     public func remove(forKey key: String) {
         semaphoreSignal.wait()
         storage.remove(key: key)
         semaphoreSignal.signal()
     }
     
-  
+    
     public func remove(forKey key: String, completionHandler: @escaping(() -> Void)) {
         queue.async {
             self.remove(forKey: key)
             completionHandler()
         }
+    }
+}
+
+
+
+/// 用来编码解码
+class ConvertibleFactory<Value: Codable> {
+    func toData(value: Value) throws -> Data? {
+        let data = try? JSONEncoder().encode(value)
+        return data
+    }
+    
+    func fromData(data: Data) throws -> Value? {
+        let object = try? JSONDecoder().decode(Value.self, from: data)
+        return object
+    }
+}
+
+
+
+/// 用来使 DiskCache 支持下标语法及 for-in 循环
+extension DiskCache: Sequence {
+    subscript(key:String) ->Value? {
+        set {
+            if let newValue = newValue {
+                set(newValue, forKey: key)
+            }
+        }
+        get {
+            if let obj = object(forKey: key) {
+                return obj
+            }
+            return nil
+        }
+    }
+    
+    func makeIterator() -> DCGenerator<Value> {
+        semaphoreSignal.wait()
+        let generator = DCGenerator(diskCache: self)
+        semaphoreSignal.signal()
+        return generator
+    }
+}
+
+
+
+/// 用来支持 for-in 循环
+class DCGenerator<Value: Codable>: IteratorProtocol {
+    typealias Element = (key: String, value: Value)
+    private let diskCache: DiskCache<Value>
+    
+    var index: Int
+    func next() -> Element? {
+        if index == 0 {
+            diskCache.getAllKeys()
+        }
+        
+        guard index < diskCache.keys.endIndex else {
+            index = diskCache.keys.startIndex
+            return nil
+        }
+        
+        let key = diskCache.keys[index]
+        diskCache.keys.formIndex(after: &index)
+        if let e = diskCache.object(forKey: key) {
+            return (key, e)
+        }
+        return nil
+    }
+    
+    init(diskCache: DiskCache<Value>) {
+        self.diskCache = diskCache
+        self.index = diskCache.keys.startIndex
     }
 }

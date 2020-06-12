@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// 内存缓存与磁盘缓存一致行为的接口
 protocol CacheBehavior {
     associatedtype Value
 
@@ -17,7 +18,7 @@ protocol CacheBehavior {
     ///   - value: 需要缓存的数据
     ///   - key: 缓存数据的键
     ///   - cost: 缓存数据所占容量
-    func set(_ value: Value?, forKey key: String, cost: vm_size_t) -> Bool
+    func set(_ value: Value?, forKey key: String, cost: Int) -> Bool
     
     /// 将数据添加到缓存并带有添加完成后的回调
     /// - Parameters:
@@ -25,7 +26,7 @@ protocol CacheBehavior {
     ///   - key: 缓存数据的键
     ///   - cost: 缓存数据所占容量
     ///   - completionHandler: 数据添加完成的回调
-    func set(_ value: Value?, forKey key: String, cost: vm_size_t, completionHandler: @escaping((_ key: String, _ finished: Bool) -> Void))
+    func set(_ value: Value?, forKey key: String, cost: Int, completionHandler: @escaping((_ key: String, _ finished: Bool) -> Void))
     
     
     /// 根据键获取数据

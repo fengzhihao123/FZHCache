@@ -60,7 +60,11 @@ class DiskStorage<Value: Codable> {
     deinit {
         dbClose()
     }
-    
+}
+
+
+
+extension DiskStorage {
     func generateMD5(forKey key: String) -> String {
         return key.md5
     }
@@ -106,6 +110,8 @@ class DiskStorage<Value: Codable> {
     }
 }
 
+
+
 extension DiskStorage {
     func dbOpen() -> Bool {
         guard sqlite3_open(dbPath + "/\(dbFileName)", &db) == SQLITE_OK else {
@@ -136,13 +142,9 @@ extension DiskStorage {
             db = nil
             return true
         }
-        
         return true
     }
     
-    /**
-     创建数据库表
-     */
     func dbCreateTable() -> Bool {
         let sql = "pragma journal_mode = wal; pragma synchronous = normal; create table if not exists detailed (key text primary key,filename text,inline_data blob,size integer,last_access_time integer); create index if not exists last_access_time_idx on detailed(last_access_time);"
         guard dbExcuSql(sql: sql) else{ return false }
@@ -286,9 +288,7 @@ extension DiskStorage {
     func dbTotalItemCount() -> Int32 {
         let sql = "select count(*) from detailed;"
         guard let stmt = dbPrepareStmt(sql: sql) else { return -1 }
-        guard sqlite3_step(stmt) == SQLITE_ROW else {
-            return -1
-        }
+        guard sqlite3_step(stmt) == SQLITE_ROW else { return -1 }
         return sqlite3_column_int(stmt, 0)
     }
     

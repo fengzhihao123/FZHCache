@@ -7,20 +7,22 @@
 //
 
 import UIKit
+/// 双链表的数据结构
 class LinkedNode<Value: Codable> {
     var key: String
     var object: Value
-    // why vm_size_t?
-    var cost: vm_size_t
+    var cost: Int
     weak var prev: LinkedNode?
     weak var next: LinkedNode?
     
-    init(key: String, object: Value, cost: vm_size_t) {
+    init(key: String, object: Value, cost: Int) {
         self.key = key
         self.object = object
         self.cost = cost
     }
 }
+
+
 
 extension LinkedNode: Equatable {
     static func == (lhs: LinkedNode<Value>, rhs: LinkedNode<Value>) -> Bool {
@@ -28,18 +30,21 @@ extension LinkedNode: Equatable {
     }
 }
 
+
+
+/// MemoryCache 的底层实现数据结构：通过双向链表 + Dictionary 的方式实现 LRU 算法
 class MemoryStorage<Value: Codable> {
     var head: LinkedNode<Value>?
     var tail: LinkedNode<Value>?
     
-    var totalCostLimit: vm_size_t = 0
-    var totalCountLimit: vm_size_t = 0
+    var totalCostLimit = 0
+    var totalCountLimit = 0
     
     var content = [String: LinkedNode<Value>]()
-    typealias Element = (String, Value)
     var currentNode: LinkedNode<Value>?
     
-    
+    /// 将 node 插入到链表头部
+    /// - Parameter node: 需要插到链表头部的节点
     func insert(atHead node: LinkedNode<Value>) {
         totalCostLimit += node.cost
         totalCountLimit += 1
@@ -54,6 +59,8 @@ class MemoryStorage<Value: Codable> {
         }
     }
     
+    /// 将 node 移动到链表头部
+    /// - Parameter node: 需要移动到链表头部的节点
     func move(toHead node: LinkedNode<Value>) {
         if head == node { return }
         if tail == node {
@@ -71,28 +78,28 @@ class MemoryStorage<Value: Codable> {
         }
     }
     
-    @discardableResult
-    func removeTail() -> Bool {
-        if tail == nil {
-            head = tail
-            totalCostLimit = 0
-            totalCountLimit = 0
-            return false
+    /// 移除链表尾部节点
+    func removeTail() {
+        guard tail != nil else { return }
+        
+        totalCostLimit -= tail!.cost
+        totalCountLimit -= 1
+        
+        if head == tail {
+            head = nil
+            tail = nil
         } else {
             if let cur = tail?.key, let node = content.removeValue(forKey: cur) {
                 tail?.prev?.next = nil
                 tail = tail?.prev
                 node.prev = nil
                 node.next = nil
-                totalCostLimit -= node.cost
-                totalCountLimit -= 1
-                return true
             }
         }
-        return false
     }
     
-    
+    /// 从链表中移除 node
+    /// - Parameter node: 需要被移除的节点
     func remove(node: LinkedNode<Value>) {
         guard head != nil else { return }
         
@@ -112,13 +119,16 @@ class MemoryStorage<Value: Codable> {
             node.next = nil
             node.prev = nil
             head?.prev = nil
-            #warning("totalCostLimit/totalCountLimit 为什么没有做－操作")
             content.removeValue(forKey: node.key)
+            
+            totalCostLimit -= node.cost
+            totalCountLimit -= 1
         } else {
             removeTail()
         }
     }
     
+    /// 移除链表中的所有节点
     func removeAll() {
         totalCountLimit = 0
         totalCostLimit = 0
@@ -126,15 +136,18 @@ class MemoryStorage<Value: Codable> {
         head = nil
         tail = nil
         currentNode = nil
+        
         if content.count > 0 {
             content.removeAll()
         }
     }
     
+    /// 获取当前头节点
     func setCurrentNode() {
         currentNode = head
     }
     
+    /// 获取当前节点的下一个节点
     func next() -> LinkedNode<Value>? {
         let node = currentNode
         currentNode = currentNode?.next

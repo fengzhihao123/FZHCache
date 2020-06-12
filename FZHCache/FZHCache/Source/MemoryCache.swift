@@ -8,35 +8,20 @@
 
 import UIKit
 
-public class MCGenerator<Value: Codable>: IteratorProtocol{
-    public typealias Element = (key: String, value: Value)
-    
-    private var memoryCache: MemoryCache<Value>
-    
-    fileprivate init(memoryCache: MemoryCache<Value>) {
-        self.memoryCache = memoryCache
-    }
-    
-    public func next() -> Element? {
-        guard let node = memoryCache.storage.next() else {
-            memoryCache.storage.setCurrentNode()
-            return nil
-        }
-        memoryCache.storage.remove(node: node)
-        return (node.key, node.object)
-    }
-    
-}
-
+/// 用来进行内存缓存操作的类
 class MemoryCache<Value: Codable> {
-    var totalCostLimit: vm_size_t = 0
-    var totalCountLimit: vm_size_t = 0
+    /// 内存缓存的最大容量限制，默认为 0，即无限制
+    var totalCostLimit = 0
+    /// 内存缓存的最大数量限制，默认为 0，即无限制
+    var totalCountLimit = 0
     
+    /// 当接受到内存警告时，是否自动移除所有内存缓存，默认为 true
     var autoRemoveWhenMemoryWarning = true
+    /// 当 APP 进入后台时，是否自动移除所有内存缓存， 默认为 true
     var autoRemoveWhenEnterBackground = true
     
-    let storage = MemoryStorage<Value>()
-    let semaphoreSingal = DispatchSemaphore(value: 1)
+    fileprivate let storage = MemoryStorage<Value>()
+    private let semaphoreSingal = DispatchSemaphore(value: 1)
     private let queue = DispatchQueue(label: kMCIdentifier, attributes: DispatchQueue.Attributes.concurrent)
     
     init() {
@@ -49,21 +34,23 @@ class MemoryCache<Value: Codable> {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
-    @objc func didReceiveMemoryWarningNotification(){
+    @objc func didReceiveMemoryWarningNotification() {
         if self.autoRemoveWhenMemoryWarning {
             removeAll()
         }
     }
        
-    @objc func didEnterBackgroundNotification(){
+    @objc func didEnterBackgroundNotification() {
         if self.autoRemoveWhenEnterBackground{
             removeAll()
         }
     }
-    
 }
 
+
+
 private extension MemoryCache {
+    /// 当前缓存的数量超过最大限制时，移除尾部节点
     func revokeCount() {
         if totalCountLimit != 0 {
             if storage.totalCountLimit > totalCountLimit {
@@ -72,6 +59,7 @@ private extension MemoryCache {
         }
     }
     
+    /// 当前缓存的容量超过最大限制时，循环移除尾部节点，直至小于最大限制为止
     func revokeCost() {
         if totalCostLimit != 0 {
             while storage.totalCostLimit > totalCostLimit {
@@ -81,10 +69,11 @@ private extension MemoryCache {
     }
 }
 
+
+
 extension MemoryCache: CacheBehavior {
-    
     @discardableResult
-    func set(_ value: Value?, forKey key: String, cost: vm_size_t = 0) -> Bool {
+    func set(_ value: Value?, forKey key: String, cost: Int = 0) -> Bool {
         guard let obj = value else { return false }
         semaphoreSingal.wait()
         
@@ -104,7 +93,7 @@ extension MemoryCache: CacheBehavior {
         return true
     }
     
-    func set(_ value: Value?, forKey key: String, cost: vm_size_t, completionHandler: @escaping ((String, Bool) -> Void)) {
+    func set(_ value: Value?, forKey key: String, cost: Int, completionHandler: @escaping ((String, Bool) -> Void)) {
         queue.async {
             let success = self.set(value, forKey: key, cost: cost)
             completionHandler(key, success)
@@ -180,31 +169,47 @@ extension MemoryCache: CacheBehavior {
     }
 }
 
+
+
+/// 用来使 MemoryCache 支持下标语法，及支持 for-in 循环
 extension MemoryCache: Sequence {
-    /**
-    通过下标方式set和get
-    @param key: value关联的键
-    @return Value:根据key查询对应的value，如果查询到则返回对应value，否则返回nil
-    */
-    public subscript(key:String) ->Value?{
+    subscript(key: String) -> Value? {
         set {
             if let newValue = newValue {
                 set(newValue, forKey: key)
             }
-        } get {
+        }
+        get {
             if let object = object(forKey: key) { return object }
             return nil
         }
     }
     
-    /**
-    返回该序列元素迭代器
-    */
-    public func makeIterator() -> MCGenerator<Value> {
+    func makeIterator() -> MCGenerator<Value> {
         semaphoreSingal.wait()
         self.storage.setCurrentNode()
         let generator = MCGenerator(memoryCache: self)
         semaphoreSingal.signal()
         return generator
+    }
+}
+
+
+
+/// 用来支持 for-in 循环
+class MCGenerator<Value: Codable>: IteratorProtocol {
+    typealias Element = (key: String, value: Value)
+    private var memoryCache: MemoryCache<Value>
+    
+    init(memoryCache: MemoryCache<Value>) {
+        self.memoryCache = memoryCache
+    }
+    
+    func next() -> Element? {
+        guard let node = memoryCache.storage.next() else {
+            return nil
+        }
+        memoryCache.storage.move(toHead: node)
+        return (node.key, node.object)
     }
 }

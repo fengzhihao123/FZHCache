@@ -90,7 +90,7 @@ extension Cache: CacheBehavior {
     }
     
     @discardableResult
-    func set(_ value: Value?, forKey key: String, cost: vm_size_t = 0) -> Bool {
+    func set(_ value: Value?, forKey key: String, cost: Int = 0) -> Bool {
         let memoryCacheFin = memoryCache.set(value, forKey: key)
         let diskCacheFin = diskCache.set(value, forKey: key)
         if memoryCacheFin || diskCacheFin {
@@ -99,7 +99,7 @@ extension Cache: CacheBehavior {
         return false
     }
     
-    func set(_ value: Value?, forKey key: String, cost: vm_size_t, completionHandler: @escaping ((String, Bool) -> Void)) {
+    func set(_ value: Value?, forKey key: String, cost: Int, completionHandler: @escaping ((String, Bool) -> Void)) {
         queue.async { [weak self] in
             let memoryCacheFin = self?.memoryCache.set(value, forKey: key) ?? false
             let diskCacheFin = self?.diskCache.set(value, forKey: key) ?? false
