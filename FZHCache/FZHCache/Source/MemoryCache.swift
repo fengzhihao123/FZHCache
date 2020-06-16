@@ -21,7 +21,9 @@ class MemoryCache<Value: Codable> {
     var autoRemoveWhenEnterBackground = true
     
     fileprivate let storage = MemoryStorage<Value>()
-    private let semaphoreSingal = DispatchSemaphore(value: 1)
+//    private let semaphoreSingal = DispatchSemaphore(value: 1)
+    var _lock = pthread_mutex_t()
+    
     private let queue = DispatchQueue(label: kMCIdentifier, attributes: DispatchQueue.Attributes.concurrent)
     
     init() {
@@ -75,7 +77,8 @@ extension MemoryCache: CacheBehavior {
     @discardableResult
     func set(_ value: Value?, forKey key: String, cost: Int = 0) -> Bool {
         guard let obj = value else { return false }
-        semaphoreSingal.wait()
+//        pthread_mutex_lock(&_lock)
+        pthread_mutex_lock(&_lock)
         
         if let node = storage.content[key] {
             node.object = obj
@@ -89,7 +92,8 @@ extension MemoryCache: CacheBehavior {
         
         revokeCost()
         revokeCount()
-        semaphoreSingal.signal()
+//        pthread_mutex_unlock(&_lock)
+        pthread_mutex_unlock(&_lock)
         return true
     }
     
@@ -101,14 +105,14 @@ extension MemoryCache: CacheBehavior {
     }
     
     func object(forKey key: String) -> Value? {
-        semaphoreSingal.wait()
+        pthread_mutex_lock(&_lock)
         guard let node = storage.content[key] else {
-            semaphoreSingal.signal()
+            pthread_mutex_unlock(&_lock)
             return nil
         }
         
         storage.move(toHead: node)
-        semaphoreSingal.signal()
+        pthread_mutex_unlock(&_lock)
         return node.object
     }
     
@@ -123,9 +127,9 @@ extension MemoryCache: CacheBehavior {
     }
     
     func contains(_ key: String) -> Bool {
-        semaphoreSingal.wait()
+        pthread_mutex_lock(&_lock)
         let exists = storage.content.keys.contains(key)
-        semaphoreSingal.signal()
+        pthread_mutex_unlock(&_lock)
         return exists
         
     }
@@ -141,9 +145,9 @@ extension MemoryCache: CacheBehavior {
         guard !storage.content.isEmpty else {
             return
         }
-        semaphoreSingal.wait()
+        pthread_mutex_lock(&_lock)
         storage.removeAll()
-        semaphoreSingal.signal()
+        pthread_mutex_unlock(&_lock)
     }
     
     func removeAll(completionHandler: @escaping (() -> Void)) {
@@ -154,11 +158,11 @@ extension MemoryCache: CacheBehavior {
     }
     
     func remove(forKey key: String) {
-        semaphoreSingal.wait()
+        pthread_mutex_lock(&_lock)
         if let node = storage.content[key] {
             storage.remove(node: node)
         }
-        semaphoreSingal.signal()
+        pthread_mutex_unlock(&_lock)
     }
     
     func remove(forKey key: String, completionHandler: @escaping (() -> Void)) {
@@ -186,10 +190,10 @@ extension MemoryCache: Sequence {
     }
     
     func makeIterator() -> MCGenerator<Value> {
-        semaphoreSingal.wait()
+        pthread_mutex_lock(&_lock)
         self.storage.setCurrentNode()
         let generator = MCGenerator(memoryCache: self)
-        semaphoreSingal.signal()
+        pthread_mutex_unlock(&_lock)
         return generator
     }
 }

@@ -165,7 +165,7 @@ extension DiskStorage {
     
     @discardableResult
     func dbExcuSql(sql: String) -> Bool {
-        guard sqlite3_exec(db,sql.cString(using: .utf8),nil,nil,nil) == SQLITE_OK else{
+        guard sqlite3_exec(db, sql.cString(using: .utf8), nil, nil, nil) == SQLITE_OK else {
             print("sqlite exec error \(String(describing: String(validatingUTF8: sqlite3_errmsg(db))))")
             return false
         }

@@ -20,6 +20,7 @@
 		DE2DC915248E1CB900C1093E /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DC914248E1CB900C1093E /* DiskStorage.swift */; };
 		DE33708424934CE700B3D058 /* MemoryCacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE33708324934CE700B3D058 /* MemoryCacheTest.swift */; };
 		DE33708624934DBF00B3D058 /* CacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE33708524934DBF00B3D058 /* CacheTest.swift */; };
+		DE62DB8E24989483009E25B5 /* PerformanceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE62DB8D24989483009E25B5 /* PerformanceTest.swift */; };
 		DED431CC2492055800BB7D99 /* DiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED431CB2492055800BB7D99 /* DiskCache.swift */; };
 		DED431CE2492110200BB7D99 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED431CD2492110200BB7D99 /* Cache.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +41,7 @@
 		DE2DC914248E1CB900C1093E /* DiskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskStorage.swift; sourceTree = "<group>"; };
 		DE33708324934CE700B3D058 /* MemoryCacheTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCacheTest.swift; sourceTree = "<group>"; };
 		DE33708524934DBF00B3D058 /* CacheTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTest.swift; sourceTree = "<group>"; };
+		DE62DB8D24989483009E25B5 /* PerformanceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceTest.swift; sourceTree = "<group>"; };
 		DED431CB2492055800BB7D99 /* DiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCache.swift; sourceTree = "<group>"; };
 		DED431CD2492110200BB7D99 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +108,7 @@
 			children = (
 				DE33708324934CE700B3D058 /* MemoryCacheTest.swift */,
 				DE33708524934DBF00B3D058 /* CacheTest.swift */,
+				DE62DB8D24989483009E25B5 /* PerformanceTest.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				DE2DC915248E1CB900C1093E /* DiskStorage.swift in Sources */,
 				DE0787EC24922BE0007E71AE /* Constant.swift in Sources */,
 				DE2DC90F248E071D00C1093E /* MemoryStorage.swift in Sources */,
+				DE62DB8E24989483009E25B5 /* PerformanceTest.swift in Sources */,
 				DE33708424934CE700B3D058 /* MemoryCacheTest.swift in Sources */,
 				DE33708624934DBF00B3D058 /* CacheTest.swift in Sources */,
 				DE266B7124626481002938C2 /* SceneDelegate.swift in Sources */,
