@@ -69,13 +69,13 @@ extension Cache: CacheBehavior {
     
     func object(forKey key: String, completionHandler: @escaping ((String, Value?) -> Void)) {
         queue.async { [weak self] in
-            if let object = self?.memoryCache.object(forKey: key){
+            if let object = self?.memoryCache.object(forKey: key) {
                 completionHandler(key,object)
             } else if let object = self?.diskCache.object(forKey: key) {
                 self?.memoryCache.set(object, forKey: key)
-                completionHandler(key,object)
+                completionHandler(key, object)
             } else {
-                completionHandler(key,nil)
+                completionHandler(key, nil)
             }
         }
     }
@@ -109,6 +109,7 @@ extension Cache: CacheBehavior {
 
 
 
+/// 用来使 Cache 支持下标语法及 for-in 循环
 extension Cache: Sequence {
     public subscript(key: String) -> Value? {
         set {
@@ -129,6 +130,7 @@ extension Cache: Sequence {
 
 
 
+/// 用来使 Cache 支持 for - in
 class CacheGenerator<Value: Codable>: IteratorProtocol {
     typealias Element = (String, Value)
     private let memoryCache: MemoryCache<Value>
