@@ -53,12 +53,12 @@ class DiskStorage<Value: Codable> {
     convenience init(currentPath: String) {
         self.init(path: currentPath)
         guard generateDictionary() else { return }
-        guard dbOpen() else { return }
-        guard dbCreateTable() else { return }
+        guard openDatabase() else { return }
+        guard createTable() else { return }
     }
     
     deinit {
-        dbClose()
+        closeDatabase()
     }
 }
 
@@ -69,6 +69,7 @@ extension DiskStorage {
         return key.md5
     }
     
+    /// 创建缓存文件目录
     func generateDictionary() -> Bool {
         do {
             try fileManager.createDirectory(atPath: filePath, withIntermediateDirectories: true, attributes: nil)
@@ -95,13 +96,17 @@ extension DiskStorage {
         return false
     }
     
+    /// 获取缓存数据
+    /// - Parameter fileName: 缓存文件名
     func read(fileName: String) -> Data? {
         let path = append(fileName: fileName)
         guard let data = fileManager.contents(atPath: path) else { return nil }
         return data
     }
     
-    @discardableResult
+        @discardableResult
+    /// 移除缓存
+    /// - Parameter key: 需要被移除的缓存文件名
     func remove(key: String) -> Bool {
         if let fn = dbGetFileName(key: key) {
             removeFile(fileName: fn)
@@ -113,15 +118,21 @@ extension DiskStorage {
 
 
 extension DiskStorage {
-    func dbOpen() -> Bool {
-        guard sqlite3_open(dbPath + "/\(dbFileName)", &db) == SQLITE_OK else {
+    
+    /// 打开数据库
+    func openDatabase() -> Bool {
+        let fn = dbPath + "/\(dbFileName)"
+        
+        if sqlite3_open(fn, &db) == SQLITE_OK {
+            return true
+        } else {
             return false
         }
-        return true
     }
     
+    /// 关闭数据库
     @discardableResult
-    func dbClose() -> Bool {
+    func closeDatabase() -> Bool {
         var isContinue = true
         guard db == nil else {
             let res = sqlite3_close(db)
@@ -145,12 +156,12 @@ extension DiskStorage {
         return true
     }
     
-    func dbCreateTable() -> Bool {
+    /// 创建表
+    func createTable() -> Bool {
         let sql = "pragma journal_mode = wal; pragma synchronous = normal; create table if not exists detailed (key text primary key,filename text,inline_data blob,size integer,last_access_time integer); create index if not exists last_access_time_idx on detailed(last_access_time);"
-        guard dbExcuSql(sql: sql) else{ return false }
+        guard dbExcuSql(sql: sql) else { return false }
         return true
     }
-    
     
     @discardableResult
     func dbExcuSql(sql: String) -> Bool {
@@ -373,11 +384,11 @@ extension DiskStorage {
     func removeAll() {
         if !dbRemoveAllItem() { return }
         if dbStmtCache.count > 0 { dbStmtCache.removeAll(keepingCapacity: true) }
-        if !dbClose() { return }
+        if !closeDatabase() { return }
         if ((try? fileManager.removeItem(atPath: self.filePath)) == nil) { return }
         if !generateDictionary() { return }
-        if !dbOpen() { return }
-        if !dbCreateTable() { return }
+        if !openDatabase() { return }
+        if !createTable() { return }
     }
     
     func dbRemoveAllExpiredData(time: TimeInterval) -> Bool {

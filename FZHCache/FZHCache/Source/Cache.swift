@@ -8,42 +8,6 @@
 
 import UIKit
 
-class CacheGenerator<Value: Codable>: IteratorProtocol {
-    typealias Element = (String, Value)
-    private let memoryCache: MemoryCache<Value>
-    private let diskCache: DiskCache<Value>
-    private let memoryCacheGenerator: MCGenerator<Value>
-    private let diskCacheGenerator: DCGenerator<Value>
-    
-    public func next() -> Element? {
-        if diskCacheGenerator.index == 0 { diskCache.getAllKeys() }
-        guard diskCacheGenerator.index < diskCache.keys.endIndex  else {
-            diskCacheGenerator.index = diskCache.keys.startIndex
-            return nil
-        }
-        
-        let key = diskCache.keys[diskCacheGenerator.index]
-        diskCache.keys.formIndex(after: &diskCacheGenerator.index)
-        if let element = memoryCache.object(forKey: key) {
-            return (key, element)
-        } else if let element = diskCache.object(forKey: key) {
-            memoryCache.set(element, forKey: key)
-            return (key, element)
-        }
-        return nil
-    }
-    
-    fileprivate init(memoryCache: MemoryCache<Value>,
-                     diskCache: DiskCache<Value>,
-                     mcGenerator: MCGenerator<Value>,
-                     dcGenerator: DCGenerator<Value>){
-        self.memoryCache = memoryCache
-        self.diskCache = diskCache
-        self.memoryCacheGenerator = mcGenerator
-        self.diskCacheGenerator = dcGenerator
-    }
-}
-
 class Cache<Value: Codable> {
     public let memoryCache = MemoryCache<Value>()
     public let diskCache: DiskCache<Value>
@@ -58,26 +22,9 @@ class Cache<Value: Codable> {
     }
 }
 
-extension Cache: Sequence {
-    public subscript(key: String) -> Value? {
-        set {
-            if let newValue = newValue {
-                set(newValue, forKey: key)
-            }
-        } get {
-            if let object = object(forKey: key) { return object }
-            return nil
-        }
-    }
-    
-    public func makeIterator() -> CacheGenerator<Value> {
-        let generator = CacheGenerator(memoryCache: memoryCache, diskCache: diskCache, mcGenerator: memoryCache.makeIterator(), dcGenerator: diskCache.makeIterator())
-        return generator
-    }
-}
+
 
 extension Cache: CacheBehavior {
-    
     func contains(_ key: String, completionHandler: @escaping ((String, Bool) -> Void)) {
         queue.async { [weak self] in
             let contains = (self?.memoryCache.contains(key) ?? false) || (self?.diskCache.contains(key) ?? false)
@@ -157,5 +104,63 @@ extension Cache: CacheBehavior {
             self.diskCache.remove(forKey: key)
             completionHandler()
         }
+    }
+}
+
+
+
+extension Cache: Sequence {
+    public subscript(key: String) -> Value? {
+        set {
+            if let newValue = newValue {
+                set(newValue, forKey: key)
+            }
+        } get {
+            if let object = object(forKey: key) { return object }
+            return nil
+        }
+    }
+    
+    public func makeIterator() -> CacheGenerator<Value> {
+        let generator = CacheGenerator(memoryCache: memoryCache, diskCache: diskCache, mcGenerator: memoryCache.makeIterator(), dcGenerator: diskCache.makeIterator())
+        return generator
+    }
+}
+
+
+
+class CacheGenerator<Value: Codable>: IteratorProtocol {
+    typealias Element = (String, Value)
+    private let memoryCache: MemoryCache<Value>
+    private let diskCache: DiskCache<Value>
+    private let memoryCacheGenerator: MCGenerator<Value>
+    private let diskCacheGenerator: DCGenerator<Value>
+    
+    public func next() -> Element? {
+        if diskCacheGenerator.index == 0 { diskCache.getAllKeys() }
+        guard diskCacheGenerator.index < diskCache.keys.endIndex  else {
+            diskCacheGenerator.index = diskCache.keys.startIndex
+            return nil
+        }
+        
+        let key = diskCache.keys[diskCacheGenerator.index]
+        diskCache.keys.formIndex(after: &diskCacheGenerator.index)
+        if let element = memoryCache.object(forKey: key) {
+            return (key, element)
+        } else if let element = diskCache.object(forKey: key) {
+            memoryCache.set(element, forKey: key)
+            return (key, element)
+        }
+        return nil
+    }
+    
+    fileprivate init(memoryCache: MemoryCache<Value>,
+                     diskCache: DiskCache<Value>,
+                     mcGenerator: MCGenerator<Value>,
+                     dcGenerator: DCGenerator<Value>){
+        self.memoryCache = memoryCache
+        self.diskCache = diskCache
+        self.memoryCacheGenerator = mcGenerator
+        self.diskCacheGenerator = dcGenerator
     }
 }

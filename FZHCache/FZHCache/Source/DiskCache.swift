@@ -18,6 +18,7 @@ class DiskCache<Value: Codable> {
     public var autoInterval: TimeInterval = 120
     
     var keys = [String]()
+    
     fileprivate let storage: DiskStorage<Value>
     
     private let semaphoreSignal = DispatchSemaphore(value: 1)
@@ -30,25 +31,28 @@ class DiskCache<Value: Codable> {
         recursively()
     }
     
+    /// 递归删除超出限制或者过期的数据
     private func recursively() {
-        DispatchQueue.global().asyncAfter(deadline: .now() + autoInterval) {[weak self] in
+        DispatchQueue.global().asyncAfter(deadline: .now() + autoInterval) { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.discardedData()
+            strongSelf.revokeData()
             strongSelf.recursively()
         }
     }
     
-    private func discardedData() {
+    /// 移除数据
+    private func revokeData() {
         queue.async {
             self.semaphoreSignal.wait()
-            self.discardedToCost()
-            self.discardedToCount()
+            self.revokeCost()
+            self.revokeCount()
             self.removeExpired()
             self.semaphoreSignal.signal()
         }
     }
     
-    private func discardedToCount(){
+    /// 当超出数量限制时，移除数据
+    private func revokeCount() {
         if maxCountLimit == 0 { return }
         var totalCount = storage.dbTotalItemCount()
         if totalCount <= maxCountLimit{ return }
@@ -66,7 +70,10 @@ class DiskCache<Value: Codable> {
                         fin = storage.dbRemoveItem(key: key)
                     }
                     if fin {
-                        totalCount -= 1 } else { break }
+                        totalCount -= 1
+                    } else {
+                        break
+                    }
                 } else {
                     break
                 }
@@ -76,7 +83,8 @@ class DiskCache<Value: Codable> {
         if fin { storage.dbCheckpoint() }
     }
     
-    private func discardedToCost() {
+    /// 当超出容量限制时，移除数据
+    private func revokeCost() {
         if maxSize == 0 { return }
         var totalCost = storage.dbTotalItemSize()
         if totalCost < maxSize { return }
@@ -106,6 +114,7 @@ class DiskCache<Value: Codable> {
         if fin{ storage.dbCheckpoint() }
     }
     
+    /// 移除过期数据
     @discardableResult
     private func removeExpired() -> Bool {
         var currentTime = Date().timeIntervalSince1970
@@ -114,6 +123,7 @@ class DiskCache<Value: Codable> {
         return fin
     }
     
+    /// 移除过期数据
     @discardableResult
     public func removeAllExpired() -> Bool {
         semaphoreSignal.wait()
@@ -126,6 +136,7 @@ class DiskCache<Value: Codable> {
 
 
 extension DiskCache {
+    /// 获取所有的键
     func getAllKeys() {
         semaphoreSignal.wait()
         if let keys = storage.dbGetAllkeys() {
@@ -134,6 +145,7 @@ extension DiskCache {
         semaphoreSignal.signal()
     }
     
+    /// 获取所有缓存数据的数量
     public func getTotalItemCount() -> Int {
         semaphoreSignal.wait()
         let count = storage.dbTotalItemCount()
@@ -141,21 +153,26 @@ extension DiskCache {
         return Int(count)
     }
     
-    public func getTotalItemCount(completionHandler:@escaping((_ count:Int)->Void)){
+    /// 获取所有缓存数据的数量，并带有回调
+    /// - Parameter completionHandler: 获取数量后的回调
+    public func getTotalItemCount(completionHandler: @escaping((_ count: Int) -> Void)) {
         queue.async {
             let count = self.getTotalItemCount()
             completionHandler(count)
         }
     }
     
-    public func getTotalItemSize()->Int32{
+    /// 获取所有缓存数据的容量
+    public func getTotalItemSize() -> Int32 {
         self.semaphoreSignal.wait()
         let size = storage.dbTotalItemSize()
         self.semaphoreSignal.signal()
         return size
     }
     
-    public func getTotalItemSize(completionHandler:@escaping((_ size:Int32)->Void)){
+    /// 获取所有缓存数据的容量，并带有回调
+    /// - Parameter completionHandler: 获取容量后的回调
+    public func getTotalItemSize(completionHandler: @escaping((_ size: Int32) -> Void)) {
         queue.async {
             let size = self.getTotalItemSize()
             completionHandler(size)
@@ -164,13 +181,6 @@ extension DiskCache {
 }
 
 extension DiskCache: CacheBehavior {
-    public func contains(_ key: String, completionHandler: @escaping ((String, Bool) -> Void)) {
-        queue.async {
-            let exists = self.contains(key)
-            completionHandler(key, exists)
-        }
-    }
-    
     func contains(_ key: String) -> Bool {
         semaphoreSignal.wait()
         let exists = self.storage.dbIsExistsForKey(forKey: key)
@@ -178,14 +188,20 @@ extension DiskCache: CacheBehavior {
         return exists
     }
     
+    public func contains(_ key: String, completionHandler: @escaping ((String, Bool) -> Void)) {
+        queue.async {
+            let exists = self.contains(key)
+            completionHandler(key, exists)
+        }
+    }
+    
     @discardableResult
     func set(_ value: Value?, forKey key: String, cost: Int = 0) -> Bool {
         guard let object = value else { return false }
-        guard let encodedData = try? convertible.toData(value: object) else{ return false }
+        guard let encodedData = try? convertible.toData(value: object) else { return false }
         var filename:String? = nil
-        if encodedData.count > dataMaxSize{
+        if encodedData.count > dataMaxSize {
             filename = storage.generateMD5(forKey: key)
-            
         }
         semaphoreSignal.wait()
         let fin = storage.save(forKey: key, value: encodedData,fileName: filename)
@@ -208,10 +224,13 @@ extension DiskCache: CacheBehavior {
         return try? convertible.fromData(data: value)
     }
     
-    public func object(forKey key:String,completionHandler:@escaping((_ key:String,_ value:Value?) -> Void)){
+    public func object(forKey key: String, completionHandler: @escaping((_ key: String, _ value: Value?) -> Void)){
         queue.async {
-            if let object = self.object(forKey: key){ completionHandler(key,object) }
-            else { completionHandler(key,nil) }
+            if let object = self.object(forKey: key) {
+                completionHandler(key,object)
+            } else {
+                completionHandler(key,nil)
+            }
         }
     }
     
@@ -221,7 +240,6 @@ extension DiskCache: CacheBehavior {
         semaphoreSignal.signal()
     }
     
-    
     public func removeAll(completionHandler: @escaping (() -> Void)) {
         queue.async {
             self.removeAll()
@@ -229,13 +247,11 @@ extension DiskCache: CacheBehavior {
         }
     }
     
-    
     public func remove(forKey key: String) {
         semaphoreSignal.wait()
         storage.remove(key: key)
         semaphoreSignal.signal()
     }
-    
     
     public func remove(forKey key: String, completionHandler: @escaping(() -> Void)) {
         queue.async {
@@ -264,7 +280,7 @@ class ConvertibleFactory<Value: Codable> {
 
 /// 用来使 DiskCache 支持下标语法及 for-in 循环
 extension DiskCache: Sequence {
-    subscript(key:String) ->Value? {
+    subscript(key: String) -> Value? {
         set {
             if let newValue = newValue {
                 set(newValue, forKey: key)
