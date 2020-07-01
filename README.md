@@ -1,6 +1,19 @@
 # FZHCache
 a easy way to cache
 
+### Performance
+
+#### Set 
+![set](https://github.com/fengzhihao123/FZHCache/blob/master/images/set.png)
+
+#### Get
+![get](https://github.com/fengzhihao123/FZHCache/blob/master/images/get.png)
+
+#### Get - No Exist
+![get - noexist](https://github.com/fengzhihao123/FZHCache/blob/master/images/get-noexist.png)
+
+
+
 ## 问题记录
 * 磁盘缓存方式
 * 如何支持泛型
