@@ -4,13 +4,13 @@ a easy way to cache
 ### Performance
 
 #### Set 
-[set](https://github.com/fengzhihao123/FZHCache/blob/master/images/set.png)
+![set](https://github.com/fengzhihao123/FZHCache/blob/master/images/set.png)
 
 #### Get
-[get](https://github.com/fengzhihao123/FZHCache/blob/master/images/get.png)
+![get](https://github.com/fengzhihao123/FZHCache/blob/master/images/get.png)
 
 #### Get - No Exist
-[get - noexist](https://github.com/fengzhihao123/FZHCache/blob/master/images/get-noexist.png)
+![get - noexist](https://github.com/fengzhihao123/FZHCache/blob/master/images/get-noexist.png)
 
 
 
