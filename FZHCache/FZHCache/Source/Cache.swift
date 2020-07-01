@@ -11,14 +11,14 @@ import UIKit
 class Cache<Value: Codable> {
     public let memoryCache = MemoryCache<Value>()
     public let diskCache: DiskCache<Value>
-    private var diskCachePath: String
     
-    private let queue = DispatchQueue(label: kCacheIdentifier, attributes: DispatchQueue.Attributes.concurrent)
+    private var _diskCachePath: String
+    private let _queue = DispatchQueue(label: kCacheIdentifier, attributes: DispatchQueue.Attributes.concurrent)
     
     public init(cacheName: String = "default") {
-        diskCachePath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
-        diskCachePath = diskCachePath + ("/\(cacheName)")
-        diskCache = DiskCache(path: diskCachePath)
+        _diskCachePath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
+        _diskCachePath = _diskCachePath + ("/\(cacheName)")
+        diskCache = DiskCache(path: _diskCachePath)
     }
 }
 
@@ -26,7 +26,7 @@ class Cache<Value: Codable> {
 
 extension Cache: CacheBehavior {
     func contains(_ key: String, completionHandler: @escaping ((String, Bool) -> Void)) {
-        queue.async { [weak self] in
+        _queue.async { [weak self] in
             let contains = (self?.memoryCache.contains(key) ?? false) || (self?.diskCache.contains(key) ?? false)
             completionHandler(key, contains)
         }
@@ -47,7 +47,7 @@ extension Cache: CacheBehavior {
     }
     
     func set(_ value: Value?, forKey key: String, cost: Int, completionHandler: @escaping ((String, Bool) -> Void)) {
-        queue.async { [weak self] in
+        _queue.async { [weak self] in
             let memoryCacheFin = self?.memoryCache.set(value, forKey: key) ?? false
             let diskCacheFin = self?.diskCache.set(value, forKey: key) ?? false
             if memoryCacheFin || diskCacheFin {
@@ -68,7 +68,7 @@ extension Cache: CacheBehavior {
     }
     
     func object(forKey key: String, completionHandler: @escaping ((String, Value?) -> Void)) {
-        queue.async { [weak self] in
+        _queue.async { [weak self] in
             if let object = self?.memoryCache.object(forKey: key) {
                 completionHandler(key,object)
             } else if let object = self?.diskCache.object(forKey: key) {
@@ -86,7 +86,7 @@ extension Cache: CacheBehavior {
     }
     
     func removeAll(completionHandler: @escaping (() -> Void)) {
-        queue.async { [weak self] in
+        _queue.async { [weak self] in
             self?.memoryCache.removeAll()
             self?.diskCache.removeAll()
             completionHandler()
@@ -99,7 +99,7 @@ extension Cache: CacheBehavior {
     }
     
     func remove(forKey key: String, completionHandler: @escaping (() -> Void)) {
-        queue.async {
+        _queue.async {
             self.memoryCache.remove(forKey: key)
             self.diskCache.remove(forKey: key)
             completionHandler()

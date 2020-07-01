@@ -8,28 +8,98 @@
 
 import UIKit
 
+struct Student: Codable {
+    var age: Int
+    var name: String
+}
+
 class ViewController: UIViewController {
-    
-    let mTest = MemoryCacheTest()
-    let cacheTest = CacheTest()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let perTest = PerformanceTest()
-        perTest.testDictionaryTime()
-        perTest.testNSCacheTime()
-        perTest.testFZHMemoryCacheTime()
+        memoryExample()
+        print("==================")
+        cacheExample()
+    }
+    
+}
+
+private extension ViewController {
+    func memoryExample() {
+        // 基本类型
+        let memoryInt = MemoryCache<Int>()
+        memoryInt.totalCountLimit = 3
+        memoryInt.totalCostLimit = 1024
+        memoryInt.set(10, forKey: "num1")
+        memoryInt.set(20, forKey: "num2")
+        memoryInt.set(30, forKey: "num3")
+        
+        print(memoryInt.object(forKey: "num3") ?? -1) // 30
+        memoryInt.set(40, forKey: "num4")
+        print(memoryInt.object(forKey: "num1") ?? -1) // -1
+        
+        
+        
+        // 自定义对象
+        let memoryStu = MemoryCache<Student>()
+        memoryStu.totalCountLimit = 3
+        memoryStu.set(Student(age: 10, name: "name1"), forKey: "stu1")
+        memoryStu.set(Student(age: 20, name: "name2"), forKey: "stu2")
+        memoryStu.set(Student(age: 30, name: "name3"), forKey: "stu3")
+        
+        print(memoryStu.object(forKey: "stu1")?.age ?? -1) // 10
+        memoryStu.set(Student(age: 40, name: "name4"), forKey: "stu4")
+        print(memoryStu.object(forKey: "stu2")?.age ?? -1) // -1
+        
+        
+        
+        // for - in
+        for stu in memoryStu {
+            print(stu.value.name)
+        }
+        
+        
+        
+        // 支持下标访问
+        memoryStu["stu1"] = Student(age: 50, name: "name5")
+        print(memoryStu["stu1"]?.age ?? 0) // 50
+    }
+    
+    func cacheExample() {
+        // 基本类型
+        let cacheInt = Cache<Int>()
+        cacheInt.set(10, forKey: "num1")
+        cacheInt.set(20, forKey: "num2")
+        cacheInt.set(30, forKey: "num3")
+        
+        print(cacheInt.object(forKey: "num3") ?? -1) // 30
+        cacheInt.set(40, forKey: "num4")
+        print(cacheInt.object(forKey: "num1") ?? -1) // 10
+        
+        
+        
+        // 自定义对象
+        let cacheStu = Cache<Student>()
+        cacheStu.set(Student(age: 10, name: "name1"), forKey: "stu1")
+        cacheStu.set(Student(age: 20, name: "name2"), forKey: "stu2")
+        cacheStu.set(Student(age: 30, name: "name3"), forKey: "stu3")
+        
+        print(cacheStu.object(forKey: "stu1")?.age ?? -1) // 10
+        cacheStu.set(Student(age: 40, name: "name4"), forKey: "stu4")
+        print(cacheStu.object(forKey: "stu2")?.age ?? -1) // 20
+        
+        
+        
+        // for - in
+        for stu in cacheStu {
+            print(stu.1.name)
+        }
+        
+        
+        
+        // 支持下标访问
+        cacheStu["stu1"] = Student(age: 50, name: "name5")
+        print(cacheStu["stu1"]?.age ?? 0) // 50
     }
 }
 
-
-/*
- Set - : Dictionary: 206.93399908486754, NSCache: 1600.2097990131006, FZHMemory: 550.689937081188
- Get - : Dictionary: 150.29098803643137, NSCache: 235.5958860134706, FZHMemory: 576.6196550102904
- Get - Not exist: Dictionary: 128.97773506119847, NSCache: 217.62683207634836, FZHMemory: 153.00241799559444
- 
- 
- Set - : Dictionary: 194.71085409168154, NSCache: 1706.4215389546007, FZHMemory: 543.2781979907304
- Get - : Dictionary: 140.306702000089, NSCache: 224.91873695980757, FZHMemory: 531.8616119911894
- Get - Not exist: Dictionary: 125.59954298194498, NSCache: 220.2507599722594, FZHMemory: 152.42595598101616
- */

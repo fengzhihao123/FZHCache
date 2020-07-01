@@ -31,10 +31,10 @@ private extension String {
     }
 }
 class DiskStorage<Value: Codable> {
-    private let dbFileName = "default.sqlite"
-    private let dbWalFileName = "default.sqlite-wal"
-    private let dbShmFileName = "default.sqlite-shm"
-    private let folderName = "data"
+    private let _dbFileName = "default.sqlite"
+    private let _dbWalFileName = "default.sqlite-wal"
+    private let _dbShmFileName = "default.sqlite-shm"
+    private let _folderName = "data"
     var filePath: String
     var dbPath: String
     var db: OpaquePointer?
@@ -45,7 +45,7 @@ class DiskStorage<Value: Codable> {
     init(path: String) {
         filePath = path
         dbPath = filePath
-        filePath = filePath + "/\(folderName)"
+        filePath = filePath + "/\(_folderName)"
     }
     
     convenience init(currentPath: String) {
@@ -119,7 +119,7 @@ extension DiskStorage {
     
     /// 打开数据库
     func openDatabase() -> Bool {
-        let fn = dbPath + "/\(dbFileName)"
+        let fn = dbPath + "/\(_dbFileName)"
         
         if sqlite3_open(fn, &db) == SQLITE_OK {
             return true
