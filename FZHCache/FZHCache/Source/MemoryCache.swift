@@ -21,7 +21,6 @@ class MemoryCache<Value: Codable> {
     var autoRemoveWhenEnterBackground = true
     
     fileprivate let storage = MemoryStorage<Value>()
-//    private let semaphoreSingal = DispatchSemaphore(value: 1)
     var _lock = pthread_mutex_t()
     
     private let queue = DispatchQueue(label: kMCIdentifier, attributes: DispatchQueue.Attributes.concurrent)
@@ -77,7 +76,6 @@ extension MemoryCache: CacheBehavior {
     @discardableResult
     func set(_ value: Value?, forKey key: String, cost: Int = 0) -> Bool {
         guard let obj = value else { return false }
-//        pthread_mutex_lock(&_lock)
         pthread_mutex_lock(&_lock)
         
         if let node = storage.content[key] {
@@ -92,7 +90,6 @@ extension MemoryCache: CacheBehavior {
         
         revokeCost()
         revokeCount()
-//        pthread_mutex_unlock(&_lock)
         pthread_mutex_unlock(&_lock)
         return true
     }

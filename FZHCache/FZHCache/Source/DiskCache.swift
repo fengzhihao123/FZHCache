@@ -201,7 +201,7 @@ extension DiskCache: CacheBehavior {
         guard let encodedData = try? convertible.toData(value: object) else { return false }
         var filename:String? = nil
         if encodedData.count > dataMaxSize {
-            filename = storage.generateMD5(forKey: key)
+            filename = storage.generateSHA256(forKey: key)
         }
         semaphoreSignal.wait()
         let fin = storage.save(forKey: key, value: encodedData,fileName: filename)
