@@ -2,7 +2,7 @@
 一个使用简单、线程安全的缓存库。
 
 
-<b>Version</b>: `iOS 10+`
+<b>iOS 版本支持</b>: `iOS 10+`
 
 ## 基本使用
 ### MemoryCache - 基本类型
