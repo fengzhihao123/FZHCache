@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "FZHCache"
-  spec.version      = "0.0.1"
+  spec.version      = "0.0.5"
   spec.summary      = "An easy way to cache."
 
   spec.description  = <<-DESC
