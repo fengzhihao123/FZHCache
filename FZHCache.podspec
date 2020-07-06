@@ -37,6 +37,6 @@ Pod::Spec.new do |spec|
 
   spec.source       = { :git => "https://github.com/fengzhihao123/FZHCache.git", :tag => "#{spec.version}" }
 
-  spec.source_files  = ["Sources/*.swift"]
+  spec.source_files  = ["Source/*.swift"]
 
 end
