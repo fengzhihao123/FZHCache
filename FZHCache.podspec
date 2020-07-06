@@ -29,9 +29,9 @@ Pod::Spec.new do |spec|
 
   spec.author    = "FengZhiHao"
   
-  s.swift_version = "4.2"
+  spec.swift_version = "4.2"
   
-  s.swift_versions = ['4.0', '4.2', '5.0']
+  spec.swift_versions = ['4.0', '4.2', '5.0']
   
   spec.platform     = :ios, "10.0"
 
