@@ -13,16 +13,16 @@
 		DE06C63124B30AF50072DDCE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE06C62F24B30AF50072DDCE /* Main.storyboard */; };
 		DE06C63324B30AF80072DDCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE06C63224B30AF80072DDCE /* Assets.xcassets */; };
 		DE06C63624B30AF80072DDCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE06C63424B30AF80072DDCE /* LaunchScreen.storyboard */; };
-		DE06C64924B30BBF0072DDCE /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C63E24B30BBF0072DDCE /* Constant.swift */; };
-		DE06C64A24B30BBF0072DDCE /* MemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C63F24B30BBF0072DDCE /* MemoryStorage.swift */; };
-		DE06C64B24B30BBF0072DDCE /* CacheBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C64024B30BBF0072DDCE /* CacheBehavior.swift */; };
-		DE06C64C24B30BBF0072DDCE /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C64124B30BBF0072DDCE /* DiskStorage.swift */; };
-		DE06C64D24B30BBF0072DDCE /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C64224B30BBF0072DDCE /* MemoryCache.swift */; };
-		DE06C64E24B30BBF0072DDCE /* DiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C64324B30BBF0072DDCE /* DiskCache.swift */; };
-		DE06C64F24B30BBF0072DDCE /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C64424B30BBF0072DDCE /* Cache.swift */; };
-		DE06C65024B30BBF0072DDCE /* MemoryCacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C64624B30BBF0072DDCE /* MemoryCacheTest.swift */; };
-		DE06C65124B30BBF0072DDCE /* CacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C64724B30BBF0072DDCE /* CacheTest.swift */; };
-		DE06C65224B30BBF0072DDCE /* PerformanceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C64824B30BBF0072DDCE /* PerformanceTest.swift */; };
+		DE06C66724B31B040072DDCE /* MemoryCacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C65C24B31B040072DDCE /* MemoryCacheTest.swift */; };
+		DE06C66824B31B040072DDCE /* CacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C65D24B31B040072DDCE /* CacheTest.swift */; };
+		DE06C66924B31B040072DDCE /* PerformanceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C65E24B31B040072DDCE /* PerformanceTest.swift */; };
+		DE06C66A24B31B040072DDCE /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66024B31B040072DDCE /* Constant.swift */; };
+		DE06C66B24B31B040072DDCE /* MemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66124B31B040072DDCE /* MemoryStorage.swift */; };
+		DE06C66C24B31B040072DDCE /* CacheBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66224B31B040072DDCE /* CacheBehavior.swift */; };
+		DE06C66D24B31B050072DDCE /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66324B31B040072DDCE /* DiskStorage.swift */; };
+		DE06C66E24B31B050072DDCE /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66424B31B040072DDCE /* MemoryCache.swift */; };
+		DE06C66F24B31B050072DDCE /* DiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66524B31B040072DDCE /* DiskCache.swift */; };
+		DE06C67024B31B050072DDCE /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66624B31B040072DDCE /* Cache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,16 +34,16 @@
 		DE06C63224B30AF80072DDCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE06C63524B30AF80072DDCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE06C63724B30AF80072DDCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DE06C63E24B30BBF0072DDCE /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
-		DE06C63F24B30BBF0072DDCE /* MemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryStorage.swift; sourceTree = "<group>"; };
-		DE06C64024B30BBF0072DDCE /* CacheBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheBehavior.swift; sourceTree = "<group>"; };
-		DE06C64124B30BBF0072DDCE /* DiskStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskStorage.swift; sourceTree = "<group>"; };
-		DE06C64224B30BBF0072DDCE /* MemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
-		DE06C64324B30BBF0072DDCE /* DiskCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskCache.swift; sourceTree = "<group>"; };
-		DE06C64424B30BBF0072DDCE /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
-		DE06C64624B30BBF0072DDCE /* MemoryCacheTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCacheTest.swift; sourceTree = "<group>"; };
-		DE06C64724B30BBF0072DDCE /* CacheTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheTest.swift; sourceTree = "<group>"; };
-		DE06C64824B30BBF0072DDCE /* PerformanceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTest.swift; sourceTree = "<group>"; };
+		DE06C65C24B31B040072DDCE /* MemoryCacheTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCacheTest.swift; sourceTree = "<group>"; };
+		DE06C65D24B31B040072DDCE /* CacheTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheTest.swift; sourceTree = "<group>"; };
+		DE06C65E24B31B040072DDCE /* PerformanceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTest.swift; sourceTree = "<group>"; };
+		DE06C66024B31B040072DDCE /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		DE06C66124B31B040072DDCE /* MemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryStorage.swift; sourceTree = "<group>"; };
+		DE06C66224B31B040072DDCE /* CacheBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheBehavior.swift; sourceTree = "<group>"; };
+		DE06C66324B31B040072DDCE /* DiskStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskStorage.swift; sourceTree = "<group>"; };
+		DE06C66424B31B040072DDCE /* MemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
+		DE06C66524B31B040072DDCE /* DiskCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskCache.swift; sourceTree = "<group>"; };
+		DE06C66624B31B040072DDCE /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +76,8 @@
 		DE06C62824B30AF50072DDCE /* FZHCache */ = {
 			isa = PBXGroup;
 			children = (
-				DE06C63D24B30BBF0072DDCE /* Source */,
-				DE06C64524B30BBF0072DDCE /* Test */,
+				DE06C65F24B31B040072DDCE /* Source */,
+				DE06C65B24B31B040072DDCE /* Test */,
 				DE06C62924B30AF50072DDCE /* AppDelegate.swift */,
 				DE06C62B24B30AF50072DDCE /* SceneDelegate.swift */,
 				DE06C62D24B30AF50072DDCE /* ViewController.swift */,
@@ -89,28 +89,30 @@
 			path = FZHCache;
 			sourceTree = "<group>";
 		};
-		DE06C63D24B30BBF0072DDCE /* Source */ = {
+		DE06C65B24B31B040072DDCE /* Test */ = {
 			isa = PBXGroup;
 			children = (
-				DE06C63E24B30BBF0072DDCE /* Constant.swift */,
-				DE06C63F24B30BBF0072DDCE /* MemoryStorage.swift */,
-				DE06C64024B30BBF0072DDCE /* CacheBehavior.swift */,
-				DE06C64124B30BBF0072DDCE /* DiskStorage.swift */,
-				DE06C64224B30BBF0072DDCE /* MemoryCache.swift */,
-				DE06C64324B30BBF0072DDCE /* DiskCache.swift */,
-				DE06C64424B30BBF0072DDCE /* Cache.swift */,
+				DE06C65C24B31B040072DDCE /* MemoryCacheTest.swift */,
+				DE06C65D24B31B040072DDCE /* CacheTest.swift */,
+				DE06C65E24B31B040072DDCE /* PerformanceTest.swift */,
 			);
-			path = Source;
+			name = Test;
+			path = ../../Test;
 			sourceTree = "<group>";
 		};
-		DE06C64524B30BBF0072DDCE /* Test */ = {
+		DE06C65F24B31B040072DDCE /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				DE06C64624B30BBF0072DDCE /* MemoryCacheTest.swift */,
-				DE06C64724B30BBF0072DDCE /* CacheTest.swift */,
-				DE06C64824B30BBF0072DDCE /* PerformanceTest.swift */,
+				DE06C66024B31B040072DDCE /* Constant.swift */,
+				DE06C66124B31B040072DDCE /* MemoryStorage.swift */,
+				DE06C66224B31B040072DDCE /* CacheBehavior.swift */,
+				DE06C66324B31B040072DDCE /* DiskStorage.swift */,
+				DE06C66424B31B040072DDCE /* MemoryCache.swift */,
+				DE06C66524B31B040072DDCE /* DiskCache.swift */,
+				DE06C66624B31B040072DDCE /* Cache.swift */,
 			);
-			path = Test;
+			name = Source;
+			path = ../../Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,19 +186,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE06C66A24B31B040072DDCE /* Constant.swift in Sources */,
+				DE06C66924B31B040072DDCE /* PerformanceTest.swift in Sources */,
+				DE06C66824B31B040072DDCE /* CacheTest.swift in Sources */,
 				DE06C62E24B30AF50072DDCE /* ViewController.swift in Sources */,
-				DE06C64D24B30BBF0072DDCE /* MemoryCache.swift in Sources */,
-				DE06C64C24B30BBF0072DDCE /* DiskStorage.swift in Sources */,
+				DE06C66E24B31B050072DDCE /* MemoryCache.swift in Sources */,
+				DE06C66F24B31B050072DDCE /* DiskCache.swift in Sources */,
+				DE06C67024B31B050072DDCE /* Cache.swift in Sources */,
+				DE06C66B24B31B040072DDCE /* MemoryStorage.swift in Sources */,
+				DE06C66724B31B040072DDCE /* MemoryCacheTest.swift in Sources */,
 				DE06C62A24B30AF50072DDCE /* AppDelegate.swift in Sources */,
-				DE06C64B24B30BBF0072DDCE /* CacheBehavior.swift in Sources */,
-				DE06C64E24B30BBF0072DDCE /* DiskCache.swift in Sources */,
-				DE06C64F24B30BBF0072DDCE /* Cache.swift in Sources */,
 				DE06C62C24B30AF50072DDCE /* SceneDelegate.swift in Sources */,
-				DE06C64924B30BBF0072DDCE /* Constant.swift in Sources */,
-				DE06C65224B30BBF0072DDCE /* PerformanceTest.swift in Sources */,
-				DE06C65024B30BBF0072DDCE /* MemoryCacheTest.swift in Sources */,
-				DE06C65124B30BBF0072DDCE /* CacheTest.swift in Sources */,
-				DE06C64A24B30BBF0072DDCE /* MemoryStorage.swift in Sources */,
+				DE06C66D24B31B050072DDCE /* DiskStorage.swift in Sources */,
+				DE06C66C24B31B040072DDCE /* CacheBehavior.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

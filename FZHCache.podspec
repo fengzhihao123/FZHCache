@@ -31,11 +31,8 @@ Pod::Spec.new do |spec|
   
   spec.platform     = :ios, "10.0"
 
-  spec.source       = { :git => "http://EXAMPLE/FZHCache.git", :tag => "#{spec.version}" }
+  spec.source       = { :git => "https://github.com/fengzhihao123/FZHCache.git", :tag => "#{spec.version}" }
 
-  spec.source_files  = "FZHCache", "FZHCache/FZHCache/Source/*.{swift}"
-  spec.exclude_files = "Classes/Exclude"
-
-  # spec.public_header_files = "Classes/**/*.h"
+  spec.source_files  = "FZHCache", "Source/*.{swift}"
 
 end
