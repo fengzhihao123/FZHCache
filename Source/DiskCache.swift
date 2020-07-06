@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DiskCache<Value: Codable> {
+public class DiskCache<Value: Codable> {
     /// 磁盘缓存的最大容量
     public var maxSize = 0
     /// 磁盘缓存的最大数量
@@ -26,7 +26,7 @@ class DiskCache<Value: Codable> {
     private let _dataMaxSize = 20 * 1024
     private let _queue = DispatchQueue(label: kDCIdentifier, attributes: DispatchQueue.Attributes.concurrent)
     
-    init(path: String) {
+    public init(path: String) {
         _storage = DiskStorage(currentPath: path)
         recursively()
     }
@@ -282,7 +282,7 @@ class ConvertibleFactory<Value: Codable> {
 
 /// 用来使 DiskCache 支持下标语法及 for-in 循环
 extension DiskCache: Sequence {
-    subscript(key: String) -> Value? {
+    public subscript(key: String) -> Value? {
         set {
             if let newValue = newValue {
                 set(newValue, forKey: key)
@@ -296,7 +296,7 @@ extension DiskCache: Sequence {
         }
     }
     
-    func makeIterator() -> DCGenerator<Value> {
+    public func makeIterator() -> DCGenerator<Value> {
         os_unfair_lock_lock(&_lock)
         let generator = DCGenerator(diskCache: self)
         os_unfair_lock_unlock(&_lock)
@@ -307,12 +307,12 @@ extension DiskCache: Sequence {
 
 
 /// 用来支持 for-in 循环
-class DCGenerator<Value: Codable>: IteratorProtocol {
-    typealias Element = (key: String, value: Value)
+public class DCGenerator<Value: Codable>: IteratorProtocol {
+    public typealias Element = (key: String, value: Value)
     private let diskCache: DiskCache<Value>
     
     var index: Int
-    func next() -> Element? {
+    public func next() -> Element? {
         if index == 0 {
             diskCache.getAllKeys()
         }

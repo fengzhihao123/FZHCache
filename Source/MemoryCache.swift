@@ -9,22 +9,22 @@
 import UIKit
 
 /// 用来进行内存缓存操作的类
-class MemoryCache<Value: Codable> {
+public class MemoryCache<Value: Codable> {
     /// 内存缓存的最大容量限制，默认为 0，即无限制
-    var totalCostLimit = 0
+    public var totalCostLimit = 0
     /// 内存缓存的最大数量限制，默认为 0，即无限制
-    var totalCountLimit = 0
+    public var totalCountLimit = 0
     
     /// 当接受到内存警告时，是否自动移除所有内存缓存，默认为 true
-    var autoRemoveWhenMemoryWarning = true
+    public var autoRemoveWhenMemoryWarning = true
     /// 当 APP 进入后台时，是否自动移除所有内存缓存， 默认为 true
-    var autoRemoveWhenEnterBackground = true
+    public var autoRemoveWhenEnterBackground = true
     
     fileprivate let _storage = MemoryStorage<Value>()
     private var _lock = os_unfair_lock()
     private let _queue = DispatchQueue(label: kMCIdentifier, attributes: DispatchQueue.Attributes.concurrent)
     
-    init() {
+    public init() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMemoryWarningNotification), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
@@ -73,7 +73,7 @@ private extension MemoryCache {
 
 extension MemoryCache: CacheBehavior {
     @discardableResult
-    func set(_ value: Value?, forKey key: String, cost: Int = 0) -> Bool {
+    public func set(_ value: Value?, forKey key: String, cost: Int = 0) -> Bool {
         guard let obj = value else { return false }
         guard os_unfair_lock_trylock(&_lock) else { return false }
         
@@ -93,14 +93,14 @@ extension MemoryCache: CacheBehavior {
         return true
     }
     
-    func set(_ value: Value?, forKey key: String, cost: Int, completionHandler: @escaping ((String, Bool) -> Void)) {
+    public func set(_ value: Value?, forKey key: String, cost: Int, completionHandler: @escaping ((String, Bool) -> Void)) {
         _queue.async {
             let success = self.set(value, forKey: key, cost: cost)
             completionHandler(key, success)
         }
     }
     
-    func object(forKey key: String) -> Value? {
+    public func object(forKey key: String) -> Value? {
         guard os_unfair_lock_trylock(&_lock) else { return nil}
         guard let node = _storage.content[key] else {
             os_unfair_lock_unlock(&_lock)
@@ -112,7 +112,7 @@ extension MemoryCache: CacheBehavior {
         return node.object
     }
     
-    func object(forKey key: String, completionHandler: @escaping ((String, Value?) -> Void)) {
+    public func object(forKey key: String, completionHandler: @escaping ((String, Value?) -> Void)) {
         _queue.async {
             if let obj = self.object(forKey: key) {
                 completionHandler(key, obj)
@@ -122,7 +122,7 @@ extension MemoryCache: CacheBehavior {
         }
     }
     
-    func contains(_ key: String) -> Bool {
+    public func contains(_ key: String) -> Bool {
         guard os_unfair_lock_trylock(&_lock) else { return false }
         let exists = _storage.content.keys.contains(key)
         os_unfair_lock_unlock(&_lock)
@@ -130,14 +130,14 @@ extension MemoryCache: CacheBehavior {
         
     }
     
-    func contains(_ key: String, completionHandler: @escaping ((String, Bool) -> Void)) {
+    public func contains(_ key: String, completionHandler: @escaping ((String, Bool) -> Void)) {
         _queue.async {
             let exists = self.contains(key)
             completionHandler(key, exists)
         }
     }
     
-    func removeAll()  {
+    public func removeAll()  {
         guard !_storage.content.isEmpty else {
             return
         }
@@ -146,14 +146,14 @@ extension MemoryCache: CacheBehavior {
         os_unfair_lock_unlock(&_lock)
     }
     
-    func removeAll(completionHandler: @escaping (() -> Void)) {
+    public func removeAll(completionHandler: @escaping (() -> Void)) {
         _queue.async {
             self.removeAll()
             completionHandler()
         }
     }
     
-    func remove(forKey key: String) {
+    public func remove(forKey key: String) {
         guard os_unfair_lock_trylock(&_lock) else { return }
         if let node = _storage.content[key] {
             _storage.remove(node: node)
@@ -161,7 +161,7 @@ extension MemoryCache: CacheBehavior {
         os_unfair_lock_unlock(&_lock)
     }
     
-    func remove(forKey key: String, completionHandler: @escaping (() -> Void)) {
+    public func remove(forKey key: String, completionHandler: @escaping (() -> Void)) {
         _queue.async {
             self.remove(forKey: key)
             completionHandler()
@@ -173,7 +173,7 @@ extension MemoryCache: CacheBehavior {
 
 /// 用来使 MemoryCache 支持下标语法，及支持 for-in 循环
 extension MemoryCache: Sequence {
-    subscript(key: String) -> Value? {
+    public subscript(key: String) -> Value? {
         set {
             if let newValue = newValue {
                 set(newValue, forKey: key)
@@ -185,7 +185,7 @@ extension MemoryCache: Sequence {
         }
     }
     
-    func makeIterator() -> MCGenerator<Value> {
+    public func makeIterator() -> MCGenerator<Value> {
         os_unfair_lock_lock(&_lock)
         self._storage.setCurrentNode()
         let generator = MCGenerator(memoryCache: self)
@@ -197,15 +197,15 @@ extension MemoryCache: Sequence {
 
 
 /// 用来支持 for-in 循环
-class MCGenerator<Value: Codable>: IteratorProtocol {
-    typealias Element = (key: String, value: Value)
+public class MCGenerator<Value: Codable>: IteratorProtocol {
+    public typealias Element = (key: String, value: Value)
     private var memoryCache: MemoryCache<Value>
     
     init(memoryCache: MemoryCache<Value>) {
         self.memoryCache = memoryCache
     }
     
-    func next() -> Element? {
+    public func next() -> Element? {
         guard let node = memoryCache._storage.next() else {
             return nil
         }

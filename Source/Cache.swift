@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Cache<Value: Codable> {
+public class Cache<Value: Codable> {
     public let memoryCache = MemoryCache<Value>()
     public let diskCache: DiskCache<Value>
     
@@ -25,19 +25,19 @@ class Cache<Value: Codable> {
 
 
 extension Cache: CacheBehavior {
-    func contains(_ key: String, completionHandler: @escaping ((String, Bool) -> Void)) {
+    public func contains(_ key: String, completionHandler: @escaping ((String, Bool) -> Void)) {
         _queue.async { [weak self] in
             let contains = (self?.memoryCache.contains(key) ?? false) || (self?.diskCache.contains(key) ?? false)
             completionHandler(key, contains)
         }
     }
     
-    func contains(_ key: String) -> Bool {
+    public func contains(_ key: String) -> Bool {
         return memoryCache.contains(key) || diskCache.contains(key)
     }
     
     @discardableResult
-    func set(_ value: Value?, forKey key: String, cost: Int = 0) -> Bool {
+    public func set(_ value: Value?, forKey key: String, cost: Int = 0) -> Bool {
         let memoryCacheFin = memoryCache.set(value, forKey: key)
         let diskCacheFin = diskCache.set(value, forKey: key)
         if memoryCacheFin || diskCacheFin {
@@ -46,7 +46,7 @@ extension Cache: CacheBehavior {
         return false
     }
     
-    func set(_ value: Value?, forKey key: String, cost: Int, completionHandler: @escaping ((String, Bool) -> Void)) {
+    public func set(_ value: Value?, forKey key: String, cost: Int, completionHandler: @escaping ((String, Bool) -> Void)) {
         _queue.async { [weak self] in
             let memoryCacheFin = self?.memoryCache.set(value, forKey: key) ?? false
             let diskCacheFin = self?.diskCache.set(value, forKey: key) ?? false
@@ -58,7 +58,7 @@ extension Cache: CacheBehavior {
         }
     }
     
-    func object(forKey key: String) -> Value? {
+    public func object(forKey key: String) -> Value? {
         if let object = memoryCache.object(forKey: key) { return object }
          if let object = diskCache.object(forKey: key) {
             memoryCache.set(object, forKey: key)
@@ -67,7 +67,7 @@ extension Cache: CacheBehavior {
         return nil
     }
     
-    func object(forKey key: String, completionHandler: @escaping ((String, Value?) -> Void)) {
+    public func object(forKey key: String, completionHandler: @escaping ((String, Value?) -> Void)) {
         _queue.async { [weak self] in
             if let object = self?.memoryCache.object(forKey: key) {
                 completionHandler(key,object)
@@ -80,12 +80,12 @@ extension Cache: CacheBehavior {
         }
     }
     
-    func removeAll() {
+    public func removeAll() {
         memoryCache.removeAll()
         diskCache.removeAll()
     }
     
-    func removeAll(completionHandler: @escaping (() -> Void)) {
+    public func removeAll(completionHandler: @escaping (() -> Void)) {
         _queue.async { [weak self] in
             self?.memoryCache.removeAll()
             self?.diskCache.removeAll()
@@ -93,12 +93,12 @@ extension Cache: CacheBehavior {
         }
     }
     
-    func remove(forKey key: String) {
+    public func remove(forKey key: String) {
         memoryCache.remove(forKey: key)
         diskCache.remove(forKey: key)
     }
     
-    func remove(forKey key: String, completionHandler: @escaping (() -> Void)) {
+    public func remove(forKey key: String, completionHandler: @escaping (() -> Void)) {
         _queue.async {
             self.memoryCache.remove(forKey: key)
             self.diskCache.remove(forKey: key)
@@ -131,8 +131,8 @@ extension Cache: Sequence {
 
 
 /// 用来使 Cache 支持 for - in
-class CacheGenerator<Value: Codable>: IteratorProtocol {
-    typealias Element = (String, Value)
+public class CacheGenerator<Value: Codable>: IteratorProtocol {
+    public typealias Element = (String, Value)
     private let memoryCache: MemoryCache<Value>
     private let diskCache: DiskCache<Value>
     private let memoryCacheGenerator: MCGenerator<Value>
