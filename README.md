@@ -18,6 +18,10 @@ memoryInt.set(30, forKey: "num3")
 print(memoryInt.object(forKey: "num3") ?? -1) // 30
 memoryInt.set(40, forKey: "num4")
 print(memoryInt.object(forKey: "num1") ?? -1) // -1
+        
+print(memoryInt.contains("num4")) // true
+memoryInt.removeAll()
+print(memoryInt.object(forKey: "num4") ?? -1) // -1
 ```
 ### MemoryCache - 自定义类型
 ```
@@ -49,6 +53,7 @@ print(memoryStu["stu1"]?.age ?? 0) // 50
 
 ## 支持特性
 * 支持LRU算法
+* 支持存储遵守 Codable 的自定义类型
 * 线程安全
 * 支持 for-in 访问元素
 * 支持下标语法 set/get 元素
@@ -65,13 +70,3 @@ print(memoryStu["stu1"]?.age ?? 0) // 50
 
 ### Get - No Exist
 ![get - noexist](https://github.com/fengzhihao123/FZHCache/blob/master/images/get-noexist.png)
-
-
-
-## 问题记录
-* 磁盘缓存方式
-* 如何支持泛型
-* 双向链表的释放问题
-* 为什么要使用双向链表？`答：因为我们需要删除操作。删除一个节点不光要得到该节点本身的指针，也需要操作其前驱节点的指针，而双向链表才能支持直接查找前驱，保证操作的时间复杂度 O(1)`
-* SHA256 VS MD5
-* CommonCrypto 库的作用
