@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "FZHCache"
-  spec.version      = "0.0.5"
+  spec.version      = "0.0.6"
   spec.summary      = "An easy way to cache."
 
   spec.description  = <<-DESC
@@ -37,6 +37,6 @@ Pod::Spec.new do |spec|
 
   spec.source       = { :git => "https://github.com/fengzhihao123/FZHCache.git", :tag => "#{spec.version}" }
 
-  spec.source_files  = "FZHCache", "FZHCache/Source/*.{swift}"
+  spec.source_files  = ["Sources/*.swift"]
 
 end
