@@ -2,7 +2,18 @@
 一个使用简单、线程安全的缓存库。
 
 
-<b>iOS 版本支持</b>: `iOS 10+`
+<b>iOS 版本支持</b>: `iOS 10+`   <b> 当前版本</b>: `0.0.6`
+
+## Install
+
+将 `pod 'FZHCache', '~> 0.0.6'` 添加到你的 Podfile 中:
+```
+target 'MyApp' do
+  pod 'FZHCache', '~> 0.0.6'
+end
+```
+
+然后在终端中运行 `pod install` 即可。
 
 ## 基本使用
 ### MemoryCache - 基本类型
