@@ -13,9 +13,6 @@
 		DE06C63124B30AF50072DDCE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE06C62F24B30AF50072DDCE /* Main.storyboard */; };
 		DE06C63324B30AF80072DDCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE06C63224B30AF80072DDCE /* Assets.xcassets */; };
 		DE06C63624B30AF80072DDCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE06C63424B30AF80072DDCE /* LaunchScreen.storyboard */; };
-		DE06C66724B31B040072DDCE /* MemoryCacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C65C24B31B040072DDCE /* MemoryCacheTest.swift */; };
-		DE06C66824B31B040072DDCE /* CacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C65D24B31B040072DDCE /* CacheTest.swift */; };
-		DE06C66924B31B040072DDCE /* PerformanceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C65E24B31B040072DDCE /* PerformanceTest.swift */; };
 		DE06C66A24B31B040072DDCE /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66024B31B040072DDCE /* Constant.swift */; };
 		DE06C66B24B31B040072DDCE /* MemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66124B31B040072DDCE /* MemoryStorage.swift */; };
 		DE06C66C24B31B040072DDCE /* CacheBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66224B31B040072DDCE /* CacheBehavior.swift */; };
@@ -23,7 +20,19 @@
 		DE06C66E24B31B050072DDCE /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66424B31B040072DDCE /* MemoryCache.swift */; };
 		DE06C66F24B31B050072DDCE /* DiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66524B31B040072DDCE /* DiskCache.swift */; };
 		DE06C67024B31B050072DDCE /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE06C66624B31B040072DDCE /* Cache.swift */; };
+		DEAB94F225148BBE00C86F27 /* FZHMemoryCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAB94F125148BBE00C86F27 /* FZHMemoryCacheTests.swift */; };
+		DEAB94FA25148F7F00C86F27 /* FZHCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAB94F925148F7F00C86F27 /* FZHCacheTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DEAB94F425148BBE00C86F27 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DE06C61E24B30AF50072DDCE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DE06C62524B30AF50072DDCE;
+			remoteInfo = FZHCache;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		DE06C62624B30AF50072DDCE /* FZHCache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FZHCache.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,9 +43,6 @@
 		DE06C63224B30AF80072DDCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE06C63524B30AF80072DDCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE06C63724B30AF80072DDCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DE06C65C24B31B040072DDCE /* MemoryCacheTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCacheTest.swift; sourceTree = "<group>"; };
-		DE06C65D24B31B040072DDCE /* CacheTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheTest.swift; sourceTree = "<group>"; };
-		DE06C65E24B31B040072DDCE /* PerformanceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTest.swift; sourceTree = "<group>"; };
 		DE06C66024B31B040072DDCE /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		DE06C66124B31B040072DDCE /* MemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryStorage.swift; sourceTree = "<group>"; };
 		DE06C66224B31B040072DDCE /* CacheBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheBehavior.swift; sourceTree = "<group>"; };
@@ -44,10 +50,21 @@
 		DE06C66424B31B040072DDCE /* MemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
 		DE06C66524B31B040072DDCE /* DiskCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskCache.swift; sourceTree = "<group>"; };
 		DE06C66624B31B040072DDCE /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		DEAB94EF25148BBE00C86F27 /* FZHCacheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FZHCacheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEAB94F125148BBE00C86F27 /* FZHMemoryCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHMemoryCacheTests.swift; sourceTree = "<group>"; };
+		DEAB94F325148BBE00C86F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DEAB94F925148F7F00C86F27 /* FZHCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FZHCacheTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		DE06C62324B30AF50072DDCE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DEAB94EC25148BBE00C86F27 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -61,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				DE06C62824B30AF50072DDCE /* FZHCache */,
+				DEAB94F025148BBE00C86F27 /* FZHCacheTests */,
 				DE06C62724B30AF50072DDCE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				DE06C62624B30AF50072DDCE /* FZHCache.app */,
+				DEAB94EF25148BBE00C86F27 /* FZHCacheTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -77,7 +96,6 @@
 			isa = PBXGroup;
 			children = (
 				DE06C65F24B31B040072DDCE /* Source */,
-				DE06C65B24B31B040072DDCE /* Test */,
 				DE06C62924B30AF50072DDCE /* AppDelegate.swift */,
 				DE06C62B24B30AF50072DDCE /* SceneDelegate.swift */,
 				DE06C62D24B30AF50072DDCE /* ViewController.swift */,
@@ -87,17 +105,6 @@
 				DE06C63724B30AF80072DDCE /* Info.plist */,
 			);
 			path = FZHCache;
-			sourceTree = "<group>";
-		};
-		DE06C65B24B31B040072DDCE /* Test */ = {
-			isa = PBXGroup;
-			children = (
-				DE06C65C24B31B040072DDCE /* MemoryCacheTest.swift */,
-				DE06C65D24B31B040072DDCE /* CacheTest.swift */,
-				DE06C65E24B31B040072DDCE /* PerformanceTest.swift */,
-			);
-			name = Test;
-			path = ../../Test;
 			sourceTree = "<group>";
 		};
 		DE06C65F24B31B040072DDCE /* Source */ = {
@@ -113,6 +120,16 @@
 			);
 			name = Source;
 			path = ../../Source;
+			sourceTree = "<group>";
+		};
+		DEAB94F025148BBE00C86F27 /* FZHCacheTests */ = {
+			isa = PBXGroup;
+			children = (
+				DEAB94F125148BBE00C86F27 /* FZHMemoryCacheTests.swift */,
+				DEAB94F925148F7F00C86F27 /* FZHCacheTests.swift */,
+				DEAB94F325148BBE00C86F27 /* Info.plist */,
+			);
+			path = FZHCacheTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,6 +152,24 @@
 			productReference = DE06C62624B30AF50072DDCE /* FZHCache.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DEAB94EE25148BBE00C86F27 /* FZHCacheTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DEAB94F825148BBE00C86F27 /* Build configuration list for PBXNativeTarget "FZHCacheTests" */;
+			buildPhases = (
+				DEAB94EB25148BBE00C86F27 /* Sources */,
+				DEAB94EC25148BBE00C86F27 /* Frameworks */,
+				DEAB94ED25148BBE00C86F27 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DEAB94F525148BBE00C86F27 /* PBXTargetDependency */,
+			);
+			name = FZHCacheTests;
+			productName = FZHCacheTests;
+			productReference = DEAB94EF25148BBE00C86F27 /* FZHCacheTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -147,6 +182,10 @@
 				TargetAttributes = {
 					DE06C62524B30AF50072DDCE = {
 						CreatedOnToolsVersion = 11.3.1;
+					};
+					DEAB94EE25148BBE00C86F27 = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = DE06C62524B30AF50072DDCE;
 					};
 				};
 			};
@@ -164,6 +203,7 @@
 			projectRoot = "";
 			targets = (
 				DE06C62524B30AF50072DDCE /* FZHCache */,
+				DEAB94EE25148BBE00C86F27 /* FZHCacheTests */,
 			);
 		};
 /* End PBXProject section */
@@ -179,6 +219,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DEAB94ED25148BBE00C86F27 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -187,14 +234,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE06C66A24B31B040072DDCE /* Constant.swift in Sources */,
-				DE06C66924B31B040072DDCE /* PerformanceTest.swift in Sources */,
-				DE06C66824B31B040072DDCE /* CacheTest.swift in Sources */,
 				DE06C62E24B30AF50072DDCE /* ViewController.swift in Sources */,
 				DE06C66E24B31B050072DDCE /* MemoryCache.swift in Sources */,
 				DE06C66F24B31B050072DDCE /* DiskCache.swift in Sources */,
 				DE06C67024B31B050072DDCE /* Cache.swift in Sources */,
 				DE06C66B24B31B040072DDCE /* MemoryStorage.swift in Sources */,
-				DE06C66724B31B040072DDCE /* MemoryCacheTest.swift in Sources */,
 				DE06C62A24B30AF50072DDCE /* AppDelegate.swift in Sources */,
 				DE06C62C24B30AF50072DDCE /* SceneDelegate.swift in Sources */,
 				DE06C66D24B31B050072DDCE /* DiskStorage.swift in Sources */,
@@ -202,7 +246,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DEAB94EB25148BBE00C86F27 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DEAB94F225148BBE00C86F27 /* FZHMemoryCacheTests.swift in Sources */,
+				DEAB94FA25148F7F00C86F27 /* FZHCacheTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DEAB94F525148BBE00C86F27 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DE06C62524B30AF50072DDCE /* FZHCache */;
+			targetProxy = DEAB94F425148BBE00C86F27 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		DE06C62F24B30AF50072DDCE /* Main.storyboard */ = {
@@ -372,6 +433,48 @@
 			};
 			name = Release;
 		};
+		DEAB94F625148BBE00C86F27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 93J5P3W89X;
+				INFOPLIST_FILE = FZHCacheTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.aaa.FZHCacheTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FZHCache.app/FZHCache";
+			};
+			name = Debug;
+		};
+		DEAB94F725148BBE00C86F27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 93J5P3W89X;
+				INFOPLIST_FILE = FZHCacheTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.aaa.FZHCacheTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FZHCache.app/FZHCache";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -389,6 +492,15 @@
 			buildConfigurations = (
 				DE06C63B24B30AF80072DDCE /* Debug */,
 				DE06C63C24B30AF80072DDCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DEAB94F825148BBE00C86F27 /* Build configuration list for PBXNativeTarget "FZHCacheTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DEAB94F625148BBE00C86F27 /* Debug */,
+				DEAB94F725148BBE00C86F27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
