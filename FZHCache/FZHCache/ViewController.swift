@@ -19,6 +19,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         memoryExample()
         cacheExample()
+        
+        let waring = 10
+        
     }
     
 }
