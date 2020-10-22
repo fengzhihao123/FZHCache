@@ -29,6 +29,10 @@ public class DiskCache<Value: Codable> {
     public init(path: String) {
         _storage = DiskStorage(currentPath: path)
         recursively()
+        
+        
+        let waring = 10
+        let string = waring as! String
     }
     
     /// 递归删除超出限制或者过期的数据
