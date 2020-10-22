@@ -21,6 +21,7 @@ class ViewController: UIViewController {
         cacheExample()
         
         let waring = 10
+        let string = waring as! String
         
     }
     
